@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+    <script src="/scripts/bpwa.js"></script>
+    <script src="/scripts/boffo.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Oswald:400,500,600,700');
+    body {
+        background: rgba(0, 0, 0, .9);
+        color: #fff;
+        font-family: 'Oswald', sans-serif;
+        margin: 0px;
+    }
+
+    .header {
+        position: fixed;
+        background: rgba(0, 0, 0, .75);
+        width: 100vw;
+        height: 80px;
+        padding: 10px 10px 10px 20px;
+        box-shadow: 0px 2px 10px 0px rgb(0, 0, 0);
+        box-sizing: border-box;
+        font-size: 40px;
+        display: grid;
+        grid-template-columns: .5fr 2fr 12fr;
+        justify-items: left;
+        align-items: center;
+        cursor: default;
+        grid-column-gap: 15px;
+    }
+
+
+    .sideBar-true {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 300px;
+        background: rgba(0, 0, 0, .95);
+        padding: 90px 0px 0px 0px;
+        box-sizing: border-box;
+        height: calc(100%);
+        box-shadow: 1px 0px 10px 0px rgb(0, 0, 0);
+        transition-duration: .5s;
+        cursor: default;
+    }
+
+    .sideBar-false {
+        position: fixed;
+        top: 0px;
+        left: -300px;
+        width: 300px;
+        background: rgba(0, 0, 0, .75);
+        padding: 90px 10px 10px 20px;
+        box-sizing: border-box;
+        height: calc(100%);
+        box-shadow: 1px 0px 10px 0px rgb(0, 0, 0);
+        transition-duration: .5s;
+        cursor: default;
+    }
+
+    .content-true {
+        position: absolute;
+        top: 80px;
+        left: 300px;
+        padding: 25px;
+        transition-duration: .5s;
+        width: calc(100vw - 300px);
+        box-sizing: border-box;
+    }
+
+    .content-false {
+        position: absolute;
+        top: 80px;
+        left: 0px;
+        padding: 25px;
+        transition-duration: .5s;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .menuOption {
+        padding: 15px 10px 15px 20px;
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        /* justify-items: left; */
+        align-items: center;
+        font-size: 28px;
+        box-sizing: border-box;
+        transition-duration: .25s;
+    }
+
+    .menuOption:hover {
+        background: rgba(255, 255, 255, .1);
+        font-size: 32px;
+        transition-duration: .25s;
+    }
+
+    .headerSearch {
+        display: grid;
+        grid-template-columns: 10fr 2fr 2fr;
+        width: 100%;
+        justify-items: center;
+        align-items: center;
+    }
+
+
+    input.headerSearchBar,
+    input.headerSearchBar:focus,
+    input.headerSearchBar:active,
+    input.headerSearchBar:hover {
+        font-size: 28px;
+        padding-left: 10px;
+        font-family: 'Oswald', sans-serif;
+        color: #eee;
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+        width: 100%;
+        outline: none;
+    }
+
+    .headerSearchButton {
+        justify-self: center;
+        align-self: center;
+    }
+
+    .material-icons.md-bg {
+        font-size: 25vw;
+        color: rgba(0, 0, 0, 0.2);
+    }
+
+    .bg-icon {
+        position: fixed;
+        right: 50px;
+        bottom: 50px;
+    }
+    .addItemOptions {
+    position: fixed;
+    right: 15px;
+    width: 250px;
+    
+    top: 85px;
+}
+.addItemOption {
+    padding: 5px 5px 10px 15px;
+    margin-top: 3px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,.6);
+    font-size: 24px;
+}
+.addItemOption:hover {
+    background: rgba(0,0,0,.9);
+}
+
+.page-title {
+    font-size: 28px;
+}
+</style>
+
+<body ng-app="boffo">
+
+    <div ng-controller="homeController">
+
+        <div class="content-{{menuEnabled}}">
+            <div ui-view>
+
+            </div>
+        </div>
+
+        <div class="sideBar-{{menuEnabled}}">
+
+            <div ng-repeat="m in menuOptions" class="menuOption" ng-click="menuItemClickOption(m.name)">
+                <span class="menuIcon"><i class="material-icons">{{m.icon}}</i></span><span class="menuDesc">{{m.name}}</span>
+            </div>
+
+        </div>
+        <div class="header">
+            <div class="headerIcon" ng-click="toggleMenu()" ><i class="material-icons">view_headline</i></div>
+            <div ng-click="menuItemClickOption('Home')">Boffo</div>
+            <div class="headerSearch">
+
+                <input class="headerSearchBar" type="text" name="boffoSearch" value="">
+
+                <div>
+                    <span class="headerSearchButton"><i class="material-icons">search</i></span>
+                </div>
+                <div>
+                    <span class="headerSearchButton" ng-mouseenter="setAddOptionsEnabled(true)"><i class="material-icons">add_circle_outline</i></span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="addItemOptions" ng-show="addOptionsEnabled" ng-mouseleave="setAddOptionsEnabled(false)">
+
+            <div ng-repeat="o in additemOptions">
+                <div class="addItemOption" ng-click="addItemClick(o)">
+                    {{o}}
+                </div> 
+            </div>
+            
+        </div>
+
+
+
+    </div>
+
+
+</body>
+
+</html>
