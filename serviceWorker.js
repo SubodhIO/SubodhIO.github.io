@@ -1,4 +1,6 @@
-var CACHE_NAME = 'boffo-cache';
+
+var CACHE_VERSION = '2'; //update this post every Change
+var CACHE_NAME = 'boffo-cache-v'+CACHE_VERSION;
 
 var urlsToCache = [
     '/index.html'  ,
@@ -9,6 +11,8 @@ var urlsToCache = [
     '/resources/Logo_192_192.png',
 
     /* SCRIPTS */
+    '/scripts/angular.min.js',
+    '/scripts/angular-ui-router.min.js', 
     '/scripts/boffo.js',
     '/scripts/bpwa.js',
     '/scripts/index.js',
@@ -30,6 +34,8 @@ var urlsToCache = [
 
     /* VIEWS */
     '/views/home.html' 
+
+    
 ];
 
 self.addEventListener('install',function(event){
@@ -80,7 +86,7 @@ self.addEventListener('activate',function(event){
         caches.keys().then(function(cacheNames){
             return Promise.all(
                 cacheNames.map(function(cacheName){
-                    if(cacheName===CACHE_NAME){
+                    if(cacheName!==CACHE_NAME){
                         return caches.delete(cacheName);
                     }
                 })
