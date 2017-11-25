@@ -11,6 +11,7 @@
     <script src="/scripts/bpwa.js"></script>
     <script src="/scripts/boffo.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
 
 </head>
 <style>
@@ -71,10 +72,9 @@
     .content-true {
         position: absolute;
         top: 80px;
-        left: 300px;
+        left: 0px;
         padding: 25px;
         transition-duration: .5s;
-        width: calc(100vw - 300px);
         box-sizing: border-box;
     }
 
@@ -155,11 +155,11 @@
     padding: 5px 5px 10px 15px;
     margin-top: 3px;
     box-sizing: border-box;
-    background: rgba(0,0,0,.6);
+    background: rgba(0,0,0,.9);
     font-size: 24px;
 }
 .addItemOption:hover {
-    background: rgba(0,0,0,.9);
+    background: #222;
 }
 
 .page-title {

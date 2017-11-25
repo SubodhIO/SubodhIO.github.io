@@ -1,0 +1,26 @@
+{
+  "short_name": "Boffo",
+  "name": "for collaboration",
+  "icons": [
+    {
+      "src": "/resources/Logo_48_48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/resources/Logo_96_96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/resources/Logo_192_192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/views/home.html",
+  "background_color": "#111",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#111"
+}
