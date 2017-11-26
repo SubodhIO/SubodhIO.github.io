@@ -1,5 +1,11 @@
 
-var CACHE_VERSION = '2'; //update this post every Change
+/*
+
+public key | BDLsjYkCzbGGITXQNxyLovgX7LjZm5iPr7f7NogwiOMBog9K5K5FAr5QG75ebO3kTfqvKbjdhj41-AOalYCxwLs
+private key | dDBtOaLoClUs-nKH7_i7DCyFuLG9MFv18zporzNFERo
+
+*/
+var CACHE_VERSION = Date.now(); //update this post every Change
 var CACHE_NAME = 'boffo-cache-v'+CACHE_VERSION;
 
 var urlsToCache = [
@@ -112,7 +118,7 @@ self.addEventListener('fetch',function(event){
                 var responseToCache = response.clone();
 
                 caches.open(CACHE_NAME).then(function(cache){
-                    cache.put(fetchRequest,responseToCache);
+                    // cache.put(fetchRequest,responseToCache);
                 });
 
                 return response;
@@ -123,3 +129,28 @@ self.addEventListener('fetch',function(event){
     console.log('*** B | SW | FETCH | END');
 });
 
+self.addEventListener('push', function(event) {
+  console.log('[Service Worker] Push Received.');
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+  console.log('*** PUSH DATA | '+(event.data.toString()));
+  var msg = event.data.text();
+console.log('****** '+msg);
+  const title = 'Boffo';
+  const options = {
+    body: msg,
+    icon: '/resources/Logo_96_96.png',
+    badge: '/resources/Logo_96_96.png'
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', function(event) {
+  console.log('[Service Worker] Notification click Received.');
+
+  event.notification.close();
+
+  event.waitUntil(
+    clients.openWindow('https://subodhio.github.io/')
+  );
+});

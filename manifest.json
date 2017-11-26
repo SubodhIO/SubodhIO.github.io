@@ -16,11 +16,16 @@
       "src": "/resources/Logo_192_192.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "/resources/Logo_384_384.png",
+      "type": "image/png",
+      "sizes": "384x384"
     }
   ],
   "start_url": "/views/home.html",
-  "background_color": "#111",
+  "background_color": "#000",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#111"
+  "theme_color": "#000"
 }
