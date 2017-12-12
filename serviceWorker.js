@@ -44,6 +44,7 @@ var urlsToCache = [
     
 ];
 
+
 self.addEventListener('install',function(event){
     console.log('*** B | SW | INSTALL | BEGIN');
 
@@ -59,7 +60,7 @@ self.addEventListener('install',function(event){
 
                 var request = new Request(url, {mode: 'no-cors'});
 
-                return fetch(request).then(function(response){
+                 fetch(request).then(function(response){
                     if(response.status>=400){
                         throw new Error(' Request for '+urlToCache+' failed with Status '+response.status);
                     }
@@ -84,6 +85,8 @@ self.addEventListener('install',function(event){
     console.log('*** B | SW | INSTALL | END');
 
 });
+
+
 
 self.addEventListener('activate',function(event){
     console.log('*** B | SW | ACTIVATION | ');

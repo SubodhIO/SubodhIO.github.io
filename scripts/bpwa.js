@@ -77,6 +77,27 @@ app.service('online',function($rootScope,$http,$q,appParams){
 	}
 });
 
+app.service('cloudioServer',function($http,$q){
+
+	this.getSession = function(){
+		return $q(function(resolve,reject){
+			$http.post('http://om.cloudio.io:9180/api/signin',{username: 'admin',
+					password: 'sreenivt'}).then(function(res){
+						if(res.data.status === 'ERROR'){
+							console.log('CLOUDIO | Could not sign in to the API');
+							reject('ERROR');
+						}
+						else {
+							resolve(res.data.sessionId);
+							console.log('CLOUDIO | Sign in to API Successful | Session Id : '+res.data.sessionId);
+						}
+					});	
+
+
+		});
+	}
+});
+
 /************************ OFFLINE ************************/
 app.service('offlineDbStore',function($q,online,appParams){
 

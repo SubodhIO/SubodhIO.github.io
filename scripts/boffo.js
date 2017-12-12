@@ -1,6 +1,6 @@
 var app = angular.module("boffo",['ui.router','bpwa']);
 
-app.controller("homeController",function($scope,$state,online){
+app.controller("homeController",function($scope,$state,online,cloudioServer){
     $scope.myData = 'Boffo';
 
     online.getStatus().then(function(res){
@@ -36,13 +36,19 @@ app.controller("homeController",function($scope,$state,online){
     }
     $scope.menuItemClickOption = function(val){
         switch(val){
-            case 'Home': $scope.menuEnabled = false;$state.go('home'); break;
+            case 'Home': $scope.menuEnabled = false;$scope.getSession();$state.go('home'); break;
             case 'Events': $scope.menuEnabled = false;$state.go('events'); break;
             case 'Polls': $scope.menuEnabled = false;$state.go('polls');break;
             case 'Queries': $scope.menuEnabled = false;$state.go('query');break;
             case 'Proposals': $scope.menuEnabled = false;$state.go('proposal');break;
             case 'Account': $scope.menuEnabled = false;$state.go('account'); break;
         }
+    }
+
+    $scope.getSession = function(){
+        cloudioServer.getSession().then(function(res){
+            console.log('CloudIO Session Result | '+res);
+        });
     }
 });
 
