@@ -6,13 +6,13 @@ const applicationServerPublicKey =
 
 
 var sessionId = -99;
-const SERVER_URL = "http://om.cloudio.io:9180/api";
+const SERVER_URL = "https://komori.cloudio.io/api";
 
 var getSession = function() {
   return new Promise(function(resolve, reject) {
     var xhttp = new XMLHttpRequest();
-    var data = { username: "admin", password: "sreenivt" };
-    xhttp.open("POST", "http://om.cloudio.io:9180/api/signin", false);
+    var data = { username: "admin", password: "c2vc1970aeS" };
+    xhttp.open("POST", "https://komori.cloudio.io/api/signin", false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(data));
 
