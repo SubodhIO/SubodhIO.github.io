@@ -5,6 +5,7 @@ public key | BDLsjYkCzbGGITXQNxyLovgX7LjZm5iPr7f7NogwiOMBog9K5K5FAr5QG75ebO3kTfq
 private key | dDBtOaLoClUs-nKH7_i7DCyFuLG9MFv18zporzNFERo
 
 */
+var CHANGE_VERSION = 0.1; 
 var CACHE_VERSION = Date.now(); //update this post every Change
 var CACHE_NAME = 'boffo-cache-v'+CACHE_VERSION;
 

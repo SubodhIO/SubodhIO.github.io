@@ -1,10 +1,15 @@
 var app = angular.module("boffo", ["ui.router", "bpwa"]);
 
 app.service("boffoDataService", function() {
-  this.events = [{ name: "event1" },{ name: "event2" },{ name: "event3" }];
-  this.polls = [{ name: "poll1" },{ name: "poll2" }];
-  this.queries = [{ name: "query1" },{ name: "query2" },{ name: "query3" }];
+  this.events = [{ name: "event1" }, { name: "event2" }, { name: "event3" }];
+  this.polls = [{ name: "poll1" }, { name: "poll2" }];
+  this.queries = [{ name: "query1" }, { name: "query2" }, { name: "query3" }];
   this.proposals = [{ name: "proposal" }];
+
+  this.eventComments = [{ user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }];
+  this.pollComments = [{ user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }];
+  this.queryComments = [{ user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }];
+  this.proposalComments = [{ user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }, { user: "Subodh Kumar", comment: "Cool...!" }];
 
   this.getEvents = function() {
     return this.events;
@@ -17,6 +22,19 @@ app.service("boffoDataService", function() {
   };
   this.getProposals = function() {
     return this.proposals;
+  };
+
+  this.getEventComments = function() {
+    return this.eventComments;
+  };
+  this.getPollComments = function() {
+    return this.pollComments;
+  };
+  this.getQueryComments = function() {
+    return this.queryComments;
+  };
+  this.getProposalComments = function() {
+    return this.proposalComments;
   };
 });
 
@@ -45,10 +63,10 @@ app.controller("homeController", function(
   $scope.additemOptions = ["Event", "Poll", "Proposal", "Query"];
 
   $scope.menuOptions = [
-    { icon: "local_activity", name: "Events" ,styleClass: "title-event"},
-    { icon: "thumbs_up_down", name: "Polls" ,styleClass: "title-poll"},
-    { icon: "help_outline", name: "Queries" ,styleClass: "title-query"},
-    { icon: "pan_tool", name: "Proposals" ,styleClass: "title-proposal"},
+    { icon: "local_activity", name: "Events", styleClass: "title-event" },
+    { icon: "thumbs_up_down", name: "Polls", styleClass: "title-poll" },
+    { icon: "help_outline", name: "Queries", styleClass: "title-query" },
+    { icon: "pan_tool", name: "Proposals", styleClass: "title-proposal" }
     // { icon: "person", name: "Account" }
   ];
 
@@ -112,30 +130,29 @@ app.controller("homeController", function(
     });
   };
 
-  $scope.setSelectedCard = function(card){
-      if($scope.selectedCard && $scope.selectedCard===card) {
-          $scope.selectedCard = null;
-      }
-      else if(card){
-        $scope.selectedCard = card;
-      }
+  $scope.setSelectedCard = function(card) {
+    if ($scope.selectedCard && $scope.selectedCard === card) {
+      $scope.selectedCard = null;
+    } else if (card) {
+      $scope.selectedCard = card;
+      $scope.eventComments = boffoDataService.getEventComments();
+    }
   };
 
-
-  $scope.loadRecentEvents = function(){
-      $scope.homeEvents = boffoDataService.getEvents();
+  $scope.loadRecentEvents = function() {
+    $scope.homeEvents = boffoDataService.getEvents();
   };
 
-  $scope.loadRecentPolls = function(){
-      $scope.homePolls = boffoDataService.getPolls();
+  $scope.loadRecentPolls = function() {
+    $scope.homePolls = boffoDataService.getPolls();
   };
 
-  $scope.loadRecentProposals= function(){
-      $scope.homeProposals = boffoDataService.getProposals();
+  $scope.loadRecentProposals = function() {
+    $scope.homeProposals = boffoDataService.getProposals();
   };
 
-  $scope.loadRecentQueries= function(){
-      $scope.homeQueries = boffoDataService.getQueries();
+  $scope.loadRecentQueries = function() {
+    $scope.homeQueries = boffoDataService.getQueries();
   };
 
   $scope.init = function() {

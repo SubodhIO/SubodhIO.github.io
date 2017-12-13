@@ -1,26 +1,39 @@
 <style>
-   .card-show {
-    height: calc(100vh - 100px);
-    margin: 0px;
-    top: 50px;
-    left: 50px;
-    position: fixed;
-    z-index: 99;
-    width: calc(100vw - 120px);
-    /* margin: auto; */
-    transition-duration: 2s;
-}
+    .card-pre {
+        transition: height 1s;
+        width: auto;
+        height: auto;
+    }
 
-.card-show-bg {
-    background: rgba(0,0,0,.9);
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100vh;
-     z-index: 90; 
-   
-}
+    .card-show {
+        height: calc(100vh - 4vh);
+        margin: 0px;
+        top: 2vh;
+        left: 3vw;
+        position: fixed;
+        z-index: 99;
+        width: calc(100vw - 6vw);
+        /* margin: auto; */
+        transition: height 1s;
+        overflow-y: scroll;
+    }
+
+    .card-show-bg {
+        background: rgba(0, 0, 0, .9);
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+        z-index: 90;
+    }
+
+    .card-container {
+        display: grid;
+        height: 100%;
+        grid-template-rows: 1fr 1fr 1fr 10fr;
+        grid-row-gap: 10px;
+    }
 </style>
 <div>
     <h3>Events</h3>
@@ -31,25 +44,53 @@
 
 
 </div>
- <div ng-if="selectedCard" class="card-show-bg">
-            
-        </div>
+<div ng-if="selectedCard" class="card-show-bg">
+
+</div>
 <div ng-repeat="e in homeEvents">
 
-    <div class="card card-event" ng-class="{'card-show':selectedCard===e}" ng-click="setSelectedCard(e)">
-       
+    <div class="card card-event" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
+
         <div class="card-icon"><i class="material-icons">local_activity</i></div>
-        <div class="card-title">
-            #PSPK Planning
-        </div>
-        <div class="card-heading">
-            Booking tickets for movie on 10th Jan
-        </div>
-        <div class="card-options">
-            <div>
-                Join
+
+
+        <div ng-class="{'card-container':selectedCard===e}">
+
+            <div class="card-title">
+                #PSPK Planning
             </div>
+            <div class="card-heading">
+                Booking tickets for movie on 10th Jan
+            </div>
+            <div class="card-options">
+                <div>
+                    Join
+                </div>
+            </div>
+            <div class="card-discussion" ng-if="selectedCard===e">
+                <div class="card-comments">
+
+                    <div class="card-comment" ng-repeat="c in eventComments">
+                        <div class="comment-user">
+                            {{c.user}}
+                        </div>
+                        <div class="comment-comment">
+                            {{c.comment}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="add-card-comments">
+                    Type your comment here
+                </div>
+            </div>
+
         </div>
+
+
+
+
+
     </div>
 </div>
 <div>
