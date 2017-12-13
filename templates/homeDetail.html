@@ -1,42 +1,56 @@
 <style>
     .card-pre {
         position: relative;
-        transition-duration:  .25s;
+        transition-duration: .25s;
         width: auto;
         height: 10vh;
     }
 
-.card-show {
-    height: 94vh;
-    margin: 0px;
-    top: 2vh;
-    left: 3vw;
-    position: fixed;
-    z-index: 99;
-    width: 94vw;
-    /* margin: auto; */
-    transition-duration:  .5s;
-    overflow-y: scroll;
-    box-sizing: border-box;
-    padding: 15px;
-}
-.comment-user {
+    .card-show {
+        height: 92vh;
+        margin: 0px;
+        top: 6vh;
+        left: 3vw;
+        position: fixed;
+        z-index: 99;
+        width: 94vw;
+        /* margin: auto; */
+        transition-duration: .5s;
+        overflow-y: scroll;
+        box-sizing: border-box;
+        padding: 15px;
+    }
+
+    .comment-user {
+        font-size: 12px;
+    }
+
+    .comment-comment {
+        font-size: 16px;
+    }
+    .card-heading {
     font-size: 12px;
 }
-.comment-comment {
-    font-size: 16px;
-}
-.card-show .card-title {
-    font-size: 28px;
-}
 
-.card-comment {
-    padding: 3px 10px;
-    background: rgba(0,0,0,0.1);
-    box-sizing: border-box;
-    margin: 2px 0px;
-    border-radius: 5px;
+    .card-show .card-title {
+        font-size: 28px;
+    }
+
+    .card-show .card-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: rgba(0, 0, 0, 0.15);
+    font-size: 48px;
 }
+    .card-comment {
+        padding: 3px 10px;
+        background: rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        margin: 2px 0px;
+        border-radius: 5px;
+    }
+
     .card-show-bg {
         background: rgba(0, 0, 0, .9);
         position: fixed;
@@ -53,32 +67,98 @@
         grid-template-rows: 1fr 1fr 1fr 10fr;
         grid-row-gap: 10px;
     }
+
     .card-discussion {
-    display: grid;
-    grid-template-rows: 10fr 2fr;
+        display: grid;
+        grid-template-rows: 10fr 2fr;
+    }
+
+    .card-close {
+        position: fixed;
+        right: 1vw;
+        z-index: 99;
+        top: 1vh;
+    }
+
+    .card-close .material-icons {
+        font-size: 36px;
+    }
+    .section-title {
+    font-size: 28px;
+    margin-top: 30px;
 }
 </style>
-<div>
-    <h3>Events</h3>
+
+
+<div id="eventsDiv" ng-if="homePageFilter==='none'||homePageFilter==='event'">
+    <div class="section-title">
+        Events
+    </div>
+    <div ng-if="selectedCard" class="card-show-bg">
+    </div>
+    <div ng-repeat="e in homeEvents">
+
+        <div class="card card-event" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
+
+            <div class="card-icon"><i class="material-icons">local_activity</i></div>
+
+
+            <div ng-class="{'card-container':selectedCard===e}">
+
+                <div class="card-title">
+                    {{e.name}}
+                </div>
+                <div class="card-heading">
+                    <div>
+                        {{e.date | date}} | {{e.description}}
+                    </div> 
+                    <div>
+                       {{e.members}}
+                    </div> 
+                    
+                </div>
+                <div class="card-options">
+                    <div>
+                        Join
+                    </div>
+                </div>
+                <div class="card-discussion" ng-if="selectedCard===e">
+                    <div class="card-comments">
+
+                        <div class="card-comment" ng-repeat="c in eventComments">
+                            <div class="comment-user">
+                                {{c.user}}
+                            </div>
+                            <div class="comment-comment">
+                                {{c.comment}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="add-card-comments">
+                        <div>
+                            <b-input label="'Type Your Comment'"></b-input>
+                        </div>
+                        <div>
+                            <div class="btn-b btn-b-success">Post</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 </div>
-<div>
 
 
-
-
-</div>
-<div ng-if="selectedCard" class="card-show-bg">
-
-</div>
-<div ng-repeat="e in homeEvents">
-
-    <div class="card card-event" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
-
-        <div class="card-icon"><i class="material-icons">local_activity</i></div>
-
-
-        <div ng-class="{'card-container':selectedCard===e}">
-
+<div id="pollsDiv" ng-if="homePageFilter==='none'||homePageFilter==='poll'">
+    <div class="section-title">
+        Polls
+    </div>
+    <div ng-repeat="e in homePolls">
+        <div class="card card-poll" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
+            <div class="card-icon"><i class="material-icons">thumbs_up_down</i></div>
             <div class="card-title">
                 #PSPK Planning
             </div>
@@ -90,91 +170,58 @@
                     Join
                 </div>
             </div>
-            <div class="card-discussion" ng-if="selectedCard===e">
-                <div class="card-comments">
+        </div>
+    </div>
+</div>
 
-                    <div class="card-comment" ng-repeat="c in eventComments">
-                        <div class="comment-user">
-                            {{c.user}}
-                        </div>
-                        <div class="comment-comment">
-                            {{c.comment}}
-                        </div>
-                    </div>
+<div id="proposalsDiv" ng-if="homePageFilter==='none'||homePageFilter==='proposal'">
 
+    <div class="section-title">
+        Proposals
+    </div>
+    <div ng-repeat="e in homeProposals">
+        <div class="card card-proposal" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
+            <div class="card-icon"><i class="material-icons">pan_tool</i></div>
+            <div class="card-title">
+                #PSPK Planning
+            </div>
+            <div class="card-heading">
+                Booking tickets for movie on 10th Jan
+            </div>
+            <div class="card-options">
+                <div>
+                    Join
                 </div>
-                <div class="add-card-comments">
-                    <div>
-                         <b-input label="'Type Your Comment'"></b-input>
-                    </div>
-                    <div>
-                         <div class="btn-b btn-b-success">Post</div>
-                    </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="queriesDiv" ng-if="homePageFilter==='none'||homePageFilter==='query'">
+    <div class="section-title">
+        Queries
+    </div>
+    <div ng-repeat="e in homeQueries">
+        <div class="card card-query" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
+            <div class="card-icon"><i class="material-icons">help_outline</i></div>
+            <div class="card-title">
+                #PSPK Planning
+            </div>
+            <div class="card-heading">
+                Booking tickets for movie on 10th Jan
+            </div>
+            <div class="card-options">
+                <div>
+                    Join
                 </div>
             </div>
-
-        </div>
-
-
-
-
-
-    </div>
-</div>
-<div>
-    <h3>Polls</h3>
-</div>
-<div ng-repeat="e in homePolls">
-    <div class="card card-poll" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
-        <div class="card-icon"><i class="material-icons">thumbs_up_down</i></div>
-        <div class="card-title">
-            #PSPK Planning
-        </div>
-        <div class="card-heading">
-            Booking tickets for movie on 10th Jan
-        </div>
-        <div class="card-options">
-            <div>
-                Join
-            </div>
         </div>
     </div>
 </div>
-<div>
-    <h3>Proposals</h3>
-</div>
-<div ng-repeat="e in homeProposals">
-    <div class="card card-proposal" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
-        <div class="card-icon"><i class="material-icons">pan_tool</i></div>
-        <div class="card-title">
-            #PSPK Planning
-        </div>
-        <div class="card-heading">
-            Booking tickets for movie on 10th Jan
-        </div>
-        <div class="card-options">
-            <div>
-                Join
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <h3>Queries</h3>
-</div>
-<div ng-repeat="e in homeQueries">
-    <div class="card card-query" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
-        <div class="card-icon"><i class="material-icons">help_outline</i></div>
-        <div class="card-title">
-            #PSPK Planning
-        </div>
-        <div class="card-heading">
-            Booking tickets for movie on 10th Jan
-        </div>
-        <div class="card-options">
-            <div>
-                Join
-            </div>
-        </div>
-    </div>
+
+
+
+<div class="card-close" ng-if="selectedCard" ng-click="setSelectedCard(null,true)">
+    <i class="material-icons">highlight_off</i>
 </div>

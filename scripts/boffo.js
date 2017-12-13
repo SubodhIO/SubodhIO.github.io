@@ -1,7 +1,11 @@
 var app = angular.module("boffo", ["ui.router", "bpwa"]);
 
 app.service("boffoDataService", function() {
-  this.events = [{ name: "event1" }, { name: "event2" }, { name: "event3" }];
+  this.events = [
+      { name: "New Year Celebrations", description: "Fun filled event to welcome and celebrate the new year with office collegues", members:"CloudIO India", date: new Date() }, 
+      { name: "#PSPK25 Movie FDFS", description: "FDFS of #PSPK25", members:"Ravi, Subodh", date: new Date() },
+      { name: "Christmas Celebrations", description: "Fun filled event to celebrate Christmas", members:"CloudIO India", date: new Date() }
+    ];
   this.polls = [{ name: "poll1" }, { name: "poll2" }];
   this.queries = [{ name: "query1" }, { name: "query2" }, { name: "query3" }];
   this.proposals = [{ name: "proposal" }];
@@ -36,6 +40,19 @@ app.service("boffoDataService", function() {
   this.getProposalComments = function() {
     return this.proposalComments;
   };
+
+  this.addEvent = function(val) {
+    this.events.push(val);
+  };
+  this.addPoll = function(val) {
+    this.polls.push(val);
+  };
+  this.addQuery= function(val) {
+    this.queries.push(val);
+  };
+  this.addProposal = function(val) {
+    this.proposals.push(val);
+  };
 });
 
 app.controller("homeController", function(
@@ -46,6 +63,8 @@ app.controller("homeController", function(
   boffoDataService
 ) {
   $scope.myData = "Boffo";
+  $scope.selectedCard = null;
+  $scope.homePageFilter = "none";
 
   online.getStatus().then(function(res) {
     console.log("***" + res);
@@ -100,22 +119,27 @@ app.controller("homeController", function(
         $scope.menuEnabled = false;
         $scope.getSession();
         $state.go("home");
+        $scope.resetHomePageFilter();
         break;
       case "Events":
         $scope.menuEnabled = false;
-        $state.go("events");
+        // $state.go("events");
+        $scope.setHomePageFilter('event');
         break;
       case "Polls":
         $scope.menuEnabled = false;
-        $state.go("polls");
+        // $state.go("polls");
+        $scope.setHomePageFilter('poll');
         break;
       case "Queries":
         $scope.menuEnabled = false;
-        $state.go("query");
+        // $state.go("query");
+        $scope.setHomePageFilter('query');
         break;
       case "Proposals":
         $scope.menuEnabled = false;
-        $state.go("proposal");
+        // $state.go("proposal");
+        $scope.setHomePageFilter('proposal');
         break;
       case "Account":
         $scope.menuEnabled = false;
@@ -130,13 +154,23 @@ app.controller("homeController", function(
     });
   };
 
-  $scope.setSelectedCard = function(card) {
-    if ($scope.selectedCard && $scope.selectedCard === card) {
-      $scope.selectedCard = null;
+  $scope.setSelectedCard = function(card,close) {
+      if(close){
+          $scope.selectedCard = null;
+      }
+    else if ($scope.selectedCard && $scope.selectedCard === card) {
+      
     } else if (card) {
       $scope.selectedCard = card;
       $scope.eventComments = boffoDataService.getEventComments();
     }
+  };
+
+  $scope.setHomePageFilter = function(val){
+   $scope.homePageFilter = val;   
+  };
+$scope.resetHomePageFilter = function(val){
+   $scope.homePageFilter = 'none';   
   };
 
   $scope.loadRecentEvents = function() {
@@ -165,8 +199,17 @@ app.controller("homeController", function(
   $scope.init();
 });
 
-app.controller("createEventController", function($scope) {
+app.controller("createEventController", function($scope,boffoDataService) {
   $scope.eventName = "Please Type";
+  $scope.newEvent = {name:'Subodh Kumar'};
+
+  $scope.addEvent = function() {
+    boffoDataService.addEvent(angular.copy($scope.newEvent))  ;
+    $scope.newEvent = {};
+  };
+  $scope.cancelEvent = function() {
+    $scope.newEvent = {};
+  };
 });
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -218,11 +261,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 app.directive("bInput", function() {
   var directive = {};
   directive.scope = {
-    label: "="
+    label: "=",
+    ngModel: "="
   };
   directive.templateUrl = "/templates/dirInput.html";
   directive.link = function(scope, elem, attrs) {
-    console.log("***" + scope.label);
+    console.log("***" + scope.label+" ***"+scope.ngModel);
   };
 
   return directive;

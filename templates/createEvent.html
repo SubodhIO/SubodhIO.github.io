@@ -11,15 +11,15 @@
     </div>
 
     <div class="page-content">
-        <b-input label="'Event Name'"></b-input>
-        <b-input label="'Event Description'"></b-input>
-        <b-input label="'Event Date'"></b-input>
-        <b-input label="'Event Type'"></b-input>
-        <b-input label="'Event Invitees'"></b-input>
+        <b-input label="'Event Name'" ng-model="newEvent.name"></b-input>
+        <b-input label="'Event Description'" ng-model="newEvent.description"></b-input>
+        <b-input label="'Event Date'" ng-model="newEvent.date"></b-input>
+        <!-- <b-input label="'Event Type'"></b-input> -->
+        <b-input label="'Event Invitees'" ng-model="newEvent.members"></b-input>
     </div>
     <div class="page-action">
-        <div class="btn-b btn-b-success">Add</div>
-        <div class="btn-b btn-b-error">Cancel</div>
+        <div class="btn-b btn-b-success" ng-click="addEvent()">Add</div>
+        <div class="btn-b btn-b-error" ng-click="cancelEvent()">Cancel</div>
     </div>
 
 
