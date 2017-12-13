@@ -1,9 +1,9 @@
 var app = angular.module("boffo", ["ui.router", "bpwa"]);
 
 app.service("boffoDataService", function() {
-  this.events = [{ name: "event" }];
-  this.polls = [{ name: "poll" }];
-  this.queries = [{ name: "query" }];
+  this.events = [{ name: "event1" },{ name: "event2" },{ name: "event3" }];
+  this.polls = [{ name: "poll1" },{ name: "poll2" }];
+  this.queries = [{ name: "query1" },{ name: "query2" },{ name: "query3" }];
   this.proposals = [{ name: "proposal" }];
 
   this.getEvents = function() {
@@ -45,11 +45,11 @@ app.controller("homeController", function(
   $scope.additemOptions = ["Event", "Poll", "Proposal", "Query"];
 
   $scope.menuOptions = [
-    { icon: "local_activity", name: "Events" },
-    { icon: "thumbs_up_down", name: "Polls" },
-    { icon: "help_outline", name: "Queries" },
-    { icon: "pan_tool", name: "Proposals" },
-    { icon: "person", name: "Account" }
+    { icon: "local_activity", name: "Events" ,styleClass: "title-event"},
+    { icon: "thumbs_up_down", name: "Polls" ,styleClass: "title-poll"},
+    { icon: "help_outline", name: "Queries" ,styleClass: "title-query"},
+    { icon: "pan_tool", name: "Proposals" ,styleClass: "title-proposal"},
+    // { icon: "person", name: "Account" }
   ];
 
   $scope.addItemClick = function(val) {

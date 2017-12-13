@@ -24,6 +24,7 @@
       color Blue: #1DB7C2;
       color green: #1FCA6E;
     */
+
     body {
         background: rgba(0, 0, 0, .9);
         color: #fff;
@@ -33,7 +34,7 @@
 
     .header {
         position: fixed;
-        background: rgba(0, 0, 0, .75);
+        background: rgba(0, 0, 0, .95);
         width: 100vw;
         height: 80px;
         padding: 10px 10px 10px 20px;
@@ -152,58 +153,120 @@
         right: 50px;
         bottom: 50px;
     }
+
     .addItemOptions {
-    position: fixed;
-    right: 15px;
-    width: 250px;
-    
-    top: 85px;
-}
-.addItemOption {
-    padding: 5px 5px 10px 15px;
-    margin-top: 3px;
-    box-sizing: border-box;
-    background: rgba(0,0,0,.9);
-    font-size: 24px;
-}
-.addItemOption:hover {
-    background: #222;
-}
+        position: fixed;
+        right: 15px;
+        width: 250px;
 
-.page-title {
-    font-size: 28px;
-}
+        top: 85px;
+    }
 
-#logoDiv>img {
-    height: 35px;
-}
+    .addItemOption {
+        padding: 5px 5px 10px 15px;
+        margin-top: 3px;
+        box-sizing: border-box;
+        background: rgba(0, 0, 0, .9);
+        font-size: 24px;
+    }
 
-.page-action {
-     display: grid;
-      justify-items: center;
-      align-items: center;
-      grid-column-gap: 20px;
-      grid-template-columns: .5fr .5fr ;
-      padding-top: 20px;
- }
+    .addItemOption:hover {
+        background: #222;
+    }
 
- .btn-b {
-    width: 100%;
-    /* background: #000; */
-    padding: 5px;
-    text-align: center;
-    font-size: 18px;
-    box-shadow: 0px 5px 14px -5px #000;
-}
+    .page-title {
+        font-size: 28px;
+    }
 
-.btn-b-success {
-    background: green;
-}
-.btn-b-error {
-    background: red;
-}
+    #logoDiv>img {
+        height: 35px;
+    }
 
+    .page-action {
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        grid-column-gap: 20px;
+        grid-template-columns: .5fr .5fr;
+        padding-top: 20px;
+    }
 
+    .btn-b {
+        width: 100%;
+        /* background: #000; */
+        padding: 5px;
+        text-align: center;
+        font-size: 18px;
+        box-shadow: 0px 5px 14px -5px #000;
+    }
+
+    .btn-b-success {
+        background: green;
+    }
+
+    .btn-b-error {
+        background: red;
+    }
+
+    .card {
+        position: relative;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 5px 0px;
+        box-shadow: 0px 5px 15px -5px #000;
+    }
+
+    .title-event {
+        background: linear-gradient(160deg, #872196 60%, #1DB7C2 95%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .title-poll {
+        background: linear-gradient(160deg, #1DB7C2 60%, #1FCA6E 95%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .title-proposal {
+        background: linear-gradient(160deg, #FD8C25 60%, #872196 95%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .title-query {
+        background: linear-gradient(160deg, #e5182c 60%, #fd8c25 95%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .card-query {
+        background: linear-gradient(160deg, #e5182c 60%, #fd8c25 95%);
+    }
+
+    .card-proposal {
+        background: linear-gradient(160deg, #FD8C25 60%, #872196 95%);
+    }
+
+    .card-event {
+        background: linear-gradient(160deg, #872196 60%, #1DB7C2 95%);
+    }
+
+    .card-poll {
+        background: linear-gradient(160deg, #1DB7C2 60%, #1FCA6E 95%);
+    }
+
+    .card-icon {
+        position: absolute;
+        bottom: 5px;
+        right: 15px;
+        color: rgba(0, 0, 0, 0.15);
+        /* font-size: 14px; */
+    }
+
+    .card-icon .material-icons {
+        font-size: 3em;
+    }
 </style>
 
 <body ng-app="boffo">
@@ -219,13 +282,13 @@
         <div class="sideBar-{{menuEnabled}}">
 
             <div ng-repeat="m in menuOptions" class="menuOption" ng-click="menuItemClickOption(m.name)">
-                <span class="menuIcon"><i class="material-icons">{{m.icon}}</i></span><span class="menuDesc">{{m.name}}</span>
+                <span class="menuIcon"><i class="material-icons" ng-class="m.styleClass">{{m.icon}}</i></span><span class="menuDesc" ng-class="m.styleClass">{{m.name}}</span>
             </div>
 
         </div>
         <div class="header">
-            <div class="headerIcon" ng-click="toggleMenu()" ><i class="material-icons">view_headline</i></div>
-            <div id="logoDiv" ng-click="menuItemClickOption('Home')"> <img src="/resources/Logo_384_384.png" alt="poda">  </div>
+            <div class="headerIcon" ng-click="toggleMenu()"><i class="material-icons">view_headline</i></div>
+            <div id="logoDiv" ng-click="menuItemClickOption('Home')"> <img src="/resources/Logo_384_384.png" alt="poda"> </div>
             <div class="headerSearch">
 
                 <input class="headerSearchBar" type="text" name="boffoSearch" value="">
@@ -245,9 +308,9 @@
             <div ng-repeat="o in additemOptions">
                 <div class="addItemOption" ng-click="addItemClick(o)">
                     {{o}}
-                </div> 
+                </div>
             </div>
-            
+
         </div>
 
 
