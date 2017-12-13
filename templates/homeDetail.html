@@ -1,23 +1,42 @@
 <style>
     .card-pre {
-        transition: height 1s;
+        position: relative;
+        transition-duration:  .25s;
         width: auto;
-        height: auto;
+        height: 10vh;
     }
 
-    .card-show {
-        height: calc(100vh - 4vh);
-        margin: 0px;
-        top: 2vh;
-        left: 3vw;
-        position: fixed;
-        z-index: 99;
-        width: calc(100vw - 6vw);
-        /* margin: auto; */
-        transition: height 1s;
-        overflow-y: scroll;
-    }
+.card-show {
+    height: 94vh;
+    margin: 0px;
+    top: 2vh;
+    left: 3vw;
+    position: fixed;
+    z-index: 99;
+    width: 94vw;
+    /* margin: auto; */
+    transition-duration:  .5s;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    padding: 15px;
+}
+.comment-user {
+    font-size: 12px;
+}
+.comment-comment {
+    font-size: 16px;
+}
+.card-show .card-title {
+    font-size: 28px;
+}
 
+.card-comment {
+    padding: 3px 10px;
+    background: rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    margin: 2px 0px;
+    border-radius: 5px;
+}
     .card-show-bg {
         background: rgba(0, 0, 0, .9);
         position: fixed;
@@ -34,6 +53,10 @@
         grid-template-rows: 1fr 1fr 1fr 10fr;
         grid-row-gap: 10px;
     }
+    .card-discussion {
+    display: grid;
+    grid-template-rows: 10fr 2fr;
+}
 </style>
 <div>
     <h3>Events</h3>
@@ -81,7 +104,12 @@
 
                 </div>
                 <div class="add-card-comments">
-                    Type your comment here
+                    <div>
+                         <b-input label="'Type Your Comment'"></b-input>
+                    </div>
+                    <div>
+                         <div class="btn-b btn-b-success">Post</div>
+                    </div>
                 </div>
             </div>
 
@@ -97,7 +125,7 @@
     <h3>Polls</h3>
 </div>
 <div ng-repeat="e in homePolls">
-    <div class="card card-poll" ng-class="{'card-show':selectedCard===e}" ng-click="setSelectedCard(e)">
+    <div class="card card-poll" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
         <div class="card-icon"><i class="material-icons">thumbs_up_down</i></div>
         <div class="card-title">
             #PSPK Planning
@@ -116,7 +144,7 @@
     <h3>Proposals</h3>
 </div>
 <div ng-repeat="e in homeProposals">
-    <div class="card card-proposal" ng-class="{'card-show':selectedCard===e}" ng-click="setSelectedCard(e)">
+    <div class="card card-proposal" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
         <div class="card-icon"><i class="material-icons">pan_tool</i></div>
         <div class="card-title">
             #PSPK Planning
@@ -135,7 +163,7 @@
     <h3>Queries</h3>
 </div>
 <div ng-repeat="e in homeQueries">
-    <div class="card card-query" ng-class="{'card-show':selectedCard===e}" ng-click="setSelectedCard(e)">
+    <div class="card card-query" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
         <div class="card-icon"><i class="material-icons">help_outline</i></div>
         <div class="card-title">
             #PSPK Planning
