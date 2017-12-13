@@ -17,6 +17,13 @@
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css?family=Oswald:400,500,600,700');
+    /*
+      color Red : #E5182C;
+      color Yellow : #FD8C25;
+      color Purple: #872196;
+      color Blue: #1DB7C2;
+      color green: #1FCA6E;
+    */
     body {
         background: rgba(0, 0, 0, .9);
         color: #fff;
@@ -34,7 +41,7 @@
         box-sizing: border-box;
         font-size: 40px;
         display: grid;
-        grid-template-columns: .5fr 2fr 12fr;
+        grid-template-columns: .5fr 2fr 4fr;
         justify-items: left;
         align-items: center;
         cursor: default;
@@ -166,6 +173,37 @@
 .page-title {
     font-size: 28px;
 }
+
+#logoDiv>img {
+    height: 35px;
+}
+
+.page-action {
+     display: grid;
+      justify-items: center;
+      align-items: center;
+      grid-column-gap: 20px;
+      grid-template-columns: .5fr .5fr ;
+      padding-top: 20px;
+ }
+
+ .btn-b {
+    width: 100%;
+    /* background: #000; */
+    padding: 5px;
+    text-align: center;
+    font-size: 18px;
+    box-shadow: 0px 5px 14px -5px #000;
+}
+
+.btn-b-success {
+    background: green;
+}
+.btn-b-error {
+    background: red;
+}
+
+
 </style>
 
 <body ng-app="boffo">
@@ -187,7 +225,7 @@
         </div>
         <div class="header">
             <div class="headerIcon" ng-click="toggleMenu()" ><i class="material-icons">view_headline</i></div>
-            <div ng-click="menuItemClickOption('Home')">Boffo</div>
+            <div id="logoDiv" ng-click="menuItemClickOption('Home')"> <img src="/resources/Logo_384_384.png" alt="poda">  </div>
             <div class="headerSearch">
 
                 <input class="headerSearchBar" type="text" name="boffoSearch" value="">

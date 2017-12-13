@@ -1,3 +1,117 @@
+<style>
+    .card {
+        position: relative;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 5px 0px;
+        box-shadow: 0px 5px 15px -5px #000;
+    }
+
+    .card-query {
+        background: linear-gradient(160deg, #e5182c 60%, #fd8c25 95%);
+    }
+
+    .card-proposal {
+        background: linear-gradient(160deg, #FD8C25 60%, #872196 95%);
+    }
+
+    .card-event {
+        background: linear-gradient(160deg, #872196 60%, #1DB7C2 95%);
+    }
+
+    .card-poll {
+        background: linear-gradient(160deg, #1DB7C2 60%, #1FCA6E 95%);
+    }
+    .card-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    color: rgba(0,0,0,0.15);
+    /* font-size: 14px; */
+}
+.card-icon .material-icons {
+    font-size: 3em;
+}
+</style>
 <div>
-    Home Page
+    <h3>Events</h3>
+</div>
+<div>
+    <div class="card card-event">
+        <div class="card-icon"><i class="material-icons">local_activity</i></div>
+        <div class="card-title">
+            #PSPK Planning
+        </div>
+        <div class="card-heading">
+            Booking tickets for movie on 10th Jan
+        </div>
+        <div class="card-options">
+            <div>
+                Join
+            </div>
+        </div>
+    </div>
+    <div class="card card-poll">
+        <div class="card-icon"><i class="material-icons">thumbs_up_down</i></div>
+        <div class="card-title">
+            #PSPK Planning
+        </div>
+        <div class="card-heading">
+            Booking tickets for movie on 10th Jan
+        </div>
+        <div class="card-options">
+            <div>
+                Join
+            </div>
+        </div>
+    </div>
+    <div class="card card-proposal">
+        <div class="card-icon"><i class="material-icons">pan_tool</i></div>
+        <div class="card-title">
+            #PSPK Planning
+        </div>
+        <div class="card-heading">
+            Booking tickets for movie on 10th Jan
+        </div>
+        <div class="card-options">
+            <div>
+                Join
+            </div>
+        </div>
+    </div>
+    <div class="card card-query">
+        <div class="card-icon"><i class="material-icons">help_outline</i></div>
+        <div class="card-title">
+            #PSPK Planning
+        </div>
+        <div class="card-heading">
+            Booking tickets for movie on 10th Jan
+        </div>
+        <div class="card-options">
+            <div>
+                Join
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    {{homeEvents}}
+</div>
+<div>
+    <h3>Polls</h3>
+</div>
+<div>
+    {{homePolls}}
+</div>
+<div>
+    <h3>Proposals</h3>
+</div>
+<div>
+    {{homeProposals}}
+</div>
+<div>
+    <h3>Queries</h3>
+</div>
+<div>
+    {{homeQueries}}
 </div>
