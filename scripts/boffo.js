@@ -112,6 +112,14 @@ app.controller("homeController", function(
     });
   };
 
+  $scope.setSelectedCard = function(card){
+      if($scope.selectedCard && $scope.selectedCard===card) {
+          $scope.selectedCard = null;
+      }
+      else if(card){
+        $scope.selectedCard = card;
+      }
+  };
 
 
   $scope.loadRecentEvents = function(){

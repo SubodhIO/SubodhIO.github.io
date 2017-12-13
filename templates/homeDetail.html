@@ -1,5 +1,26 @@
 <style>
-    
+   .card-show {
+    height: calc(100vh - 100px);
+    margin: 0px;
+    top: 50px;
+    left: 50px;
+    position: fixed;
+    z-index: 99;
+    width: calc(100vw - 120px);
+    /* margin: auto; */
+    transition-duration: 2s;
+}
+
+.card-show-bg {
+    background: rgba(0,0,0,.9);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+     z-index: 90; 
+   
+}
 </style>
 <div>
     <h3>Events</h3>
@@ -10,9 +31,13 @@
 
 
 </div>
+ <div ng-if="selectedCard" class="card-show-bg">
+            
+        </div>
 <div ng-repeat="e in homeEvents">
 
-    <div class="card card-event">
+    <div class="card card-event" ng-class="{'card-show':selectedCard===e}" ng-click="setSelectedCard(e)">
+       
         <div class="card-icon"><i class="material-icons">local_activity</i></div>
         <div class="card-title">
             #PSPK Planning
@@ -31,7 +56,7 @@
     <h3>Polls</h3>
 </div>
 <div ng-repeat="e in homePolls">
-    <div class="card card-poll">
+    <div class="card card-poll" ng-class="{'card-show':selectedCard===e}" ng-click="setSelectedCard(e)">
         <div class="card-icon"><i class="material-icons">thumbs_up_down</i></div>
         <div class="card-title">
             #PSPK Planning
@@ -50,7 +75,7 @@
     <h3>Proposals</h3>
 </div>
 <div ng-repeat="e in homeProposals">
-    <div class="card card-proposal">
+    <div class="card card-proposal" ng-class="{'card-show':selectedCard===e}" ng-click="setSelectedCard(e)">
         <div class="card-icon"><i class="material-icons">pan_tool</i></div>
         <div class="card-title">
             #PSPK Planning
@@ -69,7 +94,7 @@
     <h3>Queries</h3>
 </div>
 <div ng-repeat="e in homeQueries">
-    <div class="card card-query">
+    <div class="card card-query" ng-class="{'card-show':selectedCard===e}" ng-click="setSelectedCard(e)">
         <div class="card-icon"><i class="material-icons">help_outline</i></div>
         <div class="card-title">
             #PSPK Planning
