@@ -4,21 +4,19 @@
 <div class="bg-icon">
     <i class="material-icons md-bg">pan_tool</i>
 </div>
-<div ng-controller="createEventController">
+<div ng-controller="createProposalController">
     <div class="page-title">
         New Proposal
     </div>
 
     <div class="page-content">
-        <b-input label="'Proposal Name'"></b-input>
-        <b-input label="'Proposal Description'"></b-input>
-        <b-input label="'Proposal Date'"></b-input>
-        <b-input label="'Proposal Type'"></b-input>
-        <b-input label="'Proposal Invitees'"></b-input>
+        <b-input label="'Proposal Name'" ng-model="newProposal.name"></b-input>
+        <b-input label="'Proposal Description'" ng-model="newProposal.description"></b-input>
+        <b-input label="'Proposal Options'" ng-model="newProposal.optionStr"></b-input>
     </div>
     <div class="page-action">
-        <div class="btn-b btn-b-success">Add</div>
-        <div class="btn-b btn-b-error">Cancel</div>
+        <div class="btn-b btn-b-success" ng-click="addProposal()">Add</div>
+        <div class="btn-b btn-b-error" ng-click="cancelProposal()">Cancel</div>
     </div>
 
 

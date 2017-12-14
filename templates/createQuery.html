@@ -4,19 +4,18 @@
 <div class="bg-icon">
     <i class="material-icons md-bg">help_outline</i>
 </div>
-<div ng-controller="createEventController">
+<div ng-controller="createQueryController">
     <div class="page-title">
         New Query
     </div>
 
     <div class="page-content">
-        <b-input label="'Query'"></b-input>
-        <b-input label="'Query Type'"></b-input>
-        <b-input label="'Query Invitees'"></b-input>
+        <b-input label="'Query'" ng-model="newQuery.name"></b-input>
+        <b-input label="'Query Description'" ng-model="newQuery.descriptino"></b-input>
     </div>
     <div class="page-action">
-        <div class="btn-b btn-b-success">Add</div>
-        <div class="btn-b btn-b-error">Cancel</div>
+        <div class="btn-b btn-b-success" ng-click="addQuery()">Add</div>
+        <div class="btn-b btn-b-error" ng-click="cancelQuery()">Cancel</div>
     </div>
 
 

@@ -46,8 +46,45 @@
         z-index: 0;
         height: 20px;
     }
+
     .card-show .card-heading {
         font-size: 24px;
+    }
+
+.poll-option {
+    display: grid;
+    grid-template-columns: 5fr 5fr ;
+}
+
+.poll-count {
+        justify-self: left;
+    }
+    .card-show .poll-option {
+        font-size: 20px;
+        background: rgba(255, 255, 255, 0.75);
+        margin: 2px 0px;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        color: rgba(0, 0, 0, .5);
+        transition-duration: .25s;
+        display: grid;
+        grid-template-columns: 5fr 5fr;
+    }
+
+     .card-show .poll-count {
+        justify-self: right;
+    }
+
+    .card-show .poll-option:hover {
+        font-size: 24px;
+        background: rgba(0, 0, 0, .5);
+        margin: 2px 0px;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        color: rgba(255, 255, 255, 0.75);
+        transition-duration: .25s;
     }
 
     .card-comment {
@@ -182,8 +219,15 @@
                 <div class="card-title">
                     {{e.name}}
                 </div>
-                <div class="card-heading">
-                    <div ng-repeat="o in e.options">{{o}}</div>
+                <div class="card-heading poll-heading">
+                    <div ng-repeat="o in e.options" class="poll-option" ng-click="o.count = o.count+1">
+                        <div class="poll-label">
+                            {{o.label}}
+                        </div>
+                        <div class="poll-count">
+                            {{o.count}}
+                        </div>
+                    </div>
                 </div>
                 <div class="card-options">
                     <!-- <div>
@@ -230,17 +274,23 @@
         <div class="card card-proposal" ng-class="(selectedCard===e)?'card-show':'card-pre'" ng-click="setSelectedCard(e)">
             <div class="card-icon"><i class="material-icons">pan_tool</i></div>
 
-            <div ng-class="{'card-container':selectedCard===e}">
-
+               <div ng-class="{'card-container':selectedCard===e}">
                 <div class="card-title">
                     {{e.name}}
                 </div>
-                <div class="card-heading">
-                    <div ng-repeat="o in e.options">{{o}}</div>
+                <div class="card-heading poll-heading">
+                    <div ng-repeat="o in e.options" class="poll-option" ng-click="o.count = o.count+1">
+                        <div class="poll-label">
+                            {{o.label}}
+                        </div>
+                        <div class="poll-count">
+                            {{o.count}}
+                        </div>
+                    </div>
                 </div>
                 <div class="card-options">
                     <!-- <div>
-                        Join
+                        Vote
                     </div> -->
                 </div>
 
@@ -262,10 +312,11 @@
                             <b-input label="'Type Your Comment'" ng-model="eventComment"></b-input>
                         </div>
                         <div>
-                            <div class="btn-b btn-b-success" ng-click="addComment('proposal',eventComment);eventComment=''">Post</div>
+                            <div class="btn-b btn-b-success" ng-click="addComment('poll',eventComment);eventComment=''">Post</div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -284,15 +335,15 @@
 
             <div ng-class="{'card-container':selectedCard===e}">
                 <div class="card-title">
-                    #PSPK Planning
+                   {{e.name}}
                 </div>
                 <div class="card-heading">
-                    Booking tickets for movie on 10th Jan
+                    <!-- Booking tickets for movie on 10th Jan -->
                 </div>
                 <div class="card-options">
-                    <div>
+                    <!-- <div>
                         Join
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="card-discussion" ng-if="selectedCard===e">

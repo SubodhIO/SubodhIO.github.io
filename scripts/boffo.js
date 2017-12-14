@@ -24,33 +24,38 @@ app.service("boffoDataService", function() {
   ];
   this.polls = [
     {
-      name: "Which is more stable 2.3 vs 2.4",
-      options: ["GWT", "Angular", "React"],
-      optionsCount: [5, 13, 2]
+      name: "Which platform variant is more easy to develop",
+      options: [
+        { label: "GWT", count: 5 },
+        { label: "Angular", count: 10 },
+        { label: "React", count: 5 }
+      ]
     },
     {
       name: "Evening snacks in Pantry?",
-      options: ["Yes", "No"],
-      optionsCount: [0, 0]
+      options: [{ label: "Yes", count: 5 }, { label: "No", count: 10 }]
     }
   ];
-  this.queries = [{ name: "query1" }, { name: "query2" }, { name: "query3" }];
+  this.queries = [
+    { name: "Which is the best word process for MacOS" },
+    { name: "Where do we find the platform tutorial videos?" },
+    { name: "Can someone helpme with the best Veg restaurants nearby?" }
+  ];
   this.proposals = [
     {
       name: "Can we every last friday of the Month as POTLUCK friday?",
-      options: ["Agree", "Disagree", "Cant Say"],
-      optionsCount: [3, 2, 1]
+      options: [
+        { label: "Agree", count: 4 },
+        { label: "Disagree", count: 3 },
+        { label: "Cant Say", count: 5 }
+      ]
     }
   ];
 
-  this.eventComments = [{ user: "Subodh Kumar", comment: "Cool...!" }];
-  this.pollComments = [{ user: "Subodh Kumar", comment: "Nice Poll...!" }];
-  this.queryComments = [
-    { user: "Subodh Kumar", comment: "Cool...!" }
-  ];
-  this.proposalComments = [
-    { user: "Subodh Kumar", comment: "Yeah can be done" }
-  ];
+  this.eventComments = [{ user: "Lakshmi Dharani", comment: "Cool...!" }];
+  this.pollComments = [{ user: "Sai Sidhartha", comment: "Nice Poll...!" }];
+  this.queryComments = [{ user: "Anusha", comment: "Cool...!" }];
+  this.proposalComments = [{ user: "Raviteja", comment: "Yeah can be done" }];
 
   this.getEvents = function() {
     return this.events;
@@ -180,6 +185,7 @@ app.controller("homeController", function(
       case "Events":
         $scope.menuEnabled = false;
         // $state.go("events");
+        $state.go("home");
         $scope.setHomePageFilter("event");
         break;
       case "Polls":
@@ -265,16 +271,80 @@ app.controller("homeController", function(
   $scope.init();
 });
 
-app.controller("createEventController", function($scope, boffoDataService) {
-  $scope.eventName = "Please Type";
-  $scope.newEvent = { name: "Subodh Kumar" };
+app.controller("createPollController", function($scope,$state,  boffoDataService) {
+  $scope.newPoll = { name: "",optionStr:"" };
+  
+  $scope.addPoll = function() {
 
+    var ops = $scope.newPoll.optionStr.split(",");
+    $scope.newPoll.options = [];
+    for (var i = 0; i < ops.length; i++) {
+      var newObj = { label: ops[i], count: 0 };
+      $scope.newPoll.options.push(newObj);
+    }
+
+    boffoDataService.addPoll(angular.copy($scope.newPoll));
+   $scope.newPoll = { name: "",optionStr:"" };
+   $state.go("home");
+  };
+  $scope.cancelPoll = function() {
+    $scope.newPoll = { name: "",optionStr:"" };
+    $state.go("home");
+  };
+});
+
+
+app.controller("createProposalController", function($scope,$state,  boffoDataService) {
+  $scope.newProposal = { name: "",optionStr:"" };
+
+  $scope.addProposal = function() {
+    var ops = $scope.newProposal.optionStr.split(",");
+    $scope.newProposal.options = [];
+    for (var i = 0; i < ops.length; i++) {
+      var newObj = { label: ops[i], count: 0 };
+      $scope.newProposal.options.push(newObj);
+      
+    }
+
+    boffoDataService.addProposal(angular.copy($scope.newProposal));
+     $scope.newProposal = { name: "",optionStr:"" };
+     $state.go("home");
+  };
+  $scope.cancelProposal = function() {
+     $scope.newProposal = { name: "",optionStr:"" };
+     $state.go("home");
+  };
+});
+
+app.controller("createQueryController", function($scope,$state,  boffoDataService) {
+  $scope.newQuery = { name: "" };
+
+  $scope.addQuery = function() {
+    boffoDataService.addQuery(angular.copy($scope.newQuery));
+    $scope.newQuery = {};
+    $state.go("home");
+  };
+  $scope.cancelQuery = function() {
+    $scope.newQuery = { name: "" };
+    $state.go("home");
+  };
+});
+
+
+
+app.controller("createEventController", function($scope,$state, boffoDataService) {
+  $scope.eventName = "Please Type";
+  $scope.newEvent = { name: "" };
+  
   $scope.addEvent = function() {
     boffoDataService.addEvent(angular.copy($scope.newEvent));
     $scope.newEvent = {};
+    $state.go("home");
+    
   };
   $scope.cancelEvent = function() {
     $scope.newEvent = {};
+    $state.go("home");
   };
 });
 

@@ -4,20 +4,19 @@
 <div class="bg-icon">
     <i class="material-icons md-bg">thumbs_up_down</i>
 </div>
-<div ng-controller="createEventController">
+<div ng-controller="createPollController">
     <div class="page-title">
         New Poll
     </div>
 
     <div class="page-content">
-        <b-input label="'Poll Name'"></b-input>
-        <b-input label="'Poll Options'"></b-input>
-        <b-input label="'Poll Type'"></b-input>
-        <b-input label="'Poll Invitees'"></b-input>
+        <b-input label="'Poll Name'" ng-model="newPoll.name"></b-input>
+        <b-input label="'Proposal Description'" ng-model="newPoll.description"></b-input>
+        <b-input label="'Poll Options'" ng-model="newPoll.optionStr"></b-input>
     </div>
     <div class="page-action">
-        <div class="btn-b btn-b-success">Add</div>
-        <div class="btn-b btn-b-error">Cancel</div>
+        <div class="btn-b btn-b-success" ng-click="addPoll()">Add</div>
+        <div class="btn-b btn-b-error" ng-click="cancelPoll()">Cancel</div>
     </div>
 
 
