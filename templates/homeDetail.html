@@ -4,6 +4,7 @@
         transition-duration: .25s;
         width: auto;
         height: 10vh;
+        overflow-y: scroll;
     }
 
     .card-show {
@@ -312,7 +313,7 @@
                             <b-input label="'Type Your Comment'" ng-model="eventComment"></b-input>
                         </div>
                         <div>
-                            <div class="btn-b btn-b-success" ng-click="addComment('poll',eventComment);eventComment=''">Post</div>
+                            <div class="btn-b btn-b-success" ng-click="addComment('proposal',eventComment);eventComment=''">Post</div>
                         </div>
                     </div>
                 </div>

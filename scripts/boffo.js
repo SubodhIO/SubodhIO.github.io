@@ -271,11 +271,15 @@ app.controller("homeController", function(
   $scope.init();
 });
 
-app.controller("createPollController", function($scope,$state,  boffoDataService) {
-  $scope.newPoll = { name: "",optionStr:"" };
-  
-  $scope.addPoll = function() {
+app.controller("createPollController", function(
+  $scope,
+  $http,
+  $state,
+  boffoDataService
+) {
+  $scope.newPoll = { name: "", optionStr: "" };
 
+  $scope.addPoll = function() {
     var ops = $scope.newPoll.optionStr.split(",");
     $scope.newPoll.options = [];
     for (var i = 0; i < ops.length; i++) {
@@ -284,18 +288,27 @@ app.controller("createPollController", function($scope,$state,  boffoDataService
     }
 
     boffoDataService.addPoll(angular.copy($scope.newPoll));
-   $scope.newPoll = { name: "",optionStr:"" };
-   $state.go("home");
+    $scope.newPoll = { name: "", optionStr: "" };
+    $state.go("home");
+    $http
+      .get("http://boffoserver.herokuapp.com/api/notification/new-poll")
+      .then(function(res) {
+        console.log("Notification Sent");
+      });
   };
   $scope.cancelPoll = function() {
-    $scope.newPoll = { name: "",optionStr:"" };
+    $scope.newPoll = { name: "", optionStr: "" };
     $state.go("home");
   };
 });
 
-
-app.controller("createProposalController", function($scope,$state,  boffoDataService) {
-  $scope.newProposal = { name: "",optionStr:"" };
+app.controller("createProposalController", function(
+  $scope,
+  $state,
+  $http,
+  boffoDataService
+) {
+  $scope.newProposal = { name: "", optionStr: "" };
 
   $scope.addProposal = function() {
     var ops = $scope.newProposal.optionStr.split(",");
@@ -303,26 +316,40 @@ app.controller("createProposalController", function($scope,$state,  boffoDataSer
     for (var i = 0; i < ops.length; i++) {
       var newObj = { label: ops[i], count: 0 };
       $scope.newProposal.options.push(newObj);
-      
     }
 
     boffoDataService.addProposal(angular.copy($scope.newProposal));
-     $scope.newProposal = { name: "",optionStr:"" };
-     $state.go("home");
+    $scope.newProposal = { name: "", optionStr: "" };
+    $state.go("home");
+    $http
+      .get("http://boffoserver.herokuapp.com/api/notification/new-proposal")
+      .then(function(res) {
+        console.log("Notification Sent");
+      });
   };
   $scope.cancelProposal = function() {
-     $scope.newProposal = { name: "",optionStr:"" };
-     $state.go("home");
+    $scope.newProposal = { name: "", optionStr: "" };
+    $state.go("home");
   };
 });
 
-app.controller("createQueryController", function($scope,$state,  boffoDataService) {
+app.controller("createQueryController", function(
+  $scope,
+  $state,
+  $http,
+  boffoDataService
+) {
   $scope.newQuery = { name: "" };
 
   $scope.addQuery = function() {
     boffoDataService.addQuery(angular.copy($scope.newQuery));
     $scope.newQuery = {};
     $state.go("home");
+    $http
+      .get("http://boffoserver.herokuapp.com/api/notification/new-query")
+      .then(function(res) {
+        console.log("Notification Sent");
+      });
   };
   $scope.cancelQuery = function() {
     $scope.newQuery = { name: "" };
@@ -330,17 +357,24 @@ app.controller("createQueryController", function($scope,$state,  boffoDataServic
   };
 });
 
-
-
-app.controller("createEventController", function($scope,$state, boffoDataService) {
+app.controller("createEventController", function(
+  $scope,
+  $state,
+  $http,
+  boffoDataService
+) {
   $scope.eventName = "Please Type";
   $scope.newEvent = { name: "" };
-  
+
   $scope.addEvent = function() {
     boffoDataService.addEvent(angular.copy($scope.newEvent));
     $scope.newEvent = {};
     $state.go("home");
-    
+    $http
+      .get("http://boffoserver.herokuapp.com/api/notification/new-event")
+      .then(function(res) {
+        console.log("Notification Sent");
+      });
   };
   $scope.cancelEvent = function() {
     $scope.newEvent = {};
