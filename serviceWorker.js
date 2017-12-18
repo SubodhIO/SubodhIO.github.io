@@ -5,7 +5,7 @@ public key | BDLsjYkCzbGGITXQNxyLovgX7LjZm5iPr7f7NogwiOMBog9K5K5FAr5QG75ebO3kTfq
 private key | dDBtOaLoClUs-nKH7_i7DCyFuLG9MFv18zporzNFERo
 
 */
-var CHANGE_VERSION = 0.2; 
+var CHANGE_VERSION = 0.3; 
 var CACHE_VERSION = Date.now(); //update this post every Change
 var CACHE_NAME = 'boffo-cache-v'+CACHE_VERSION;
 
@@ -16,6 +16,7 @@ var urlsToCache = [
     '/resources/Logo_48_48.png',
     '/resources/Logo_96_96.png',
     '/resources/Logo_192_192.png',
+    '/resources/Logo_384_384.png',
 
     /* SCRIPTS */
     '/scripts/angular.min.js',
@@ -106,7 +107,7 @@ self.addEventListener('activate',function(event){
 });
 
 self.addEventListener('fetch',function(event){
-    console.log('*** B | SW | FETCH | BEGIN');
+    //console.log('*** B | SW | FETCH | BEGIN');
 
     event.respondWith(
         caches.match(event.request).then(function(response){
@@ -130,7 +131,7 @@ self.addEventListener('fetch',function(event){
         })
     );
 
-    console.log('*** B | SW | FETCH | END');
+    //console.log('*** B | SW | FETCH | END');
 });
 
 self.addEventListener('push', function(event) {

@@ -1,9 +1,7 @@
 const applicationServerPublicKey =
   "BImq0Bc-KX_BFwduRt3krYoqzpBoq0gQQj-p8NE0nY4WP3UAXY1FjWmzd3JbT6ZhxE5WAaAIqIfhO9aqAnmCWzk";
 
-  const privKey = "FU5fcvmakj5tbXnNj_q8HxxDiLkZ4L1llRFy3pZe76s";
-
-
+const privKey = "FU5fcvmakj5tbXnNj_q8HxxDiLkZ4L1llRFy3pZe76s";
 
 var sessionId = -99;
 const SERVER_URL = "https://komori.cloudio.io/api";
@@ -23,15 +21,12 @@ var getSession = function() {
   });
 };
 
-
 var insertDS = function(dsName, insData) {
   return new Promise(function(resolve, reject) {
-
     console.log("### INSERT DS | " + dsName + " | Session Id | " + sessionId);
     console.log("### INSERT OBJECT | " + JSON.stringify(insData));
 
     if (sessionId !== -99) {
-
       // var payload = {
       //   sessionId: sessionId,
       //   userName: "TestUser",
@@ -41,7 +36,7 @@ var insertDS = function(dsName, insData) {
       //   lastUpdatedBy: 0,
       //   lastUpdateDate: new Date()
       // };
-      
+
       // var query_args = {
       //   data: JSON.stringify(payload),
       //   headers: { "Content-Type": "application/json" },
@@ -55,12 +50,11 @@ var insertDS = function(dsName, insData) {
 
       var xhttp = new XMLHttpRequest();
       //var data = { username: "admin", password: "sreenivt" };
-      xhttp.open("POST", SERVER_URL+"/"+dsName+"/insert", false);
+      xhttp.open("POST", SERVER_URL + "/" + dsName + "/insert", false);
       xhttp.setRequestHeader("Content-type", "application/json");
       xhttp.send(JSON.stringify(payload));
 
       var response = JSON.parse(xhttp.responseText);
-
     } else {
       getSessionId().then(
         function(response) {
@@ -74,28 +68,35 @@ var insertDS = function(dsName, insData) {
   });
 };
 
+var addSubscriptionOnServer = function(data) {
+  return new Promise(function(resolve, reject) {
+    getSession().then(
+      function(response) {
+        console.log("Login from Boffo Response | " + JSON.stringify(response));
+        console.log("Subscription Data | " + JSON.stringify(data));
+        var subscriptionObj = {
+          createdBy: "",
+          creationDate: new Date(),
+          data: JSON.stringify(data),
+          lastUpdatedBy: "",
+          lastUpdateDate: new Date()
+        };
 
-var addSubscriptionOnServer = function(data){
-  return new Promise(function(resolve,reject){
-
-      getSession().then(function(response){
-        console.log('Login from Boffo Response | '+JSON.stringify(response));
-        console.log('Subscription Data | '+JSON.stringify(data));
-        var subscriptionObj = {createdBy : "", creationDate : new Date(), data : JSON.stringify(data), lastUpdatedBy : "", lastUpdateDate : new Date()};
-        
-        insertDS("BFOSubscriptions",subscriptionObj).then(function(response){
-          resolve('true');  
-        },function(error){
-          resolve('false');
-        })  
-        
-      },function(err){
-        reject('Error');
-      });
-
-      
-    }); 
-}  
+        insertDS("BFOSubscriptions", subscriptionObj).then(
+          function(response) {
+            resolve("true");
+          },
+          function(error) {
+            resolve("false");
+          }
+        );
+      },
+      function(err) {
+        reject("Error");
+      }
+    );
+  });
+};
 
 function waitUntilPreCache(registration) {
   return new Promise(function(resolve, reject) {
@@ -114,7 +115,7 @@ function waitUntilPreCache(registration) {
       // Otherwise, if this isn't the "installing" service worker, then installation must have been
       // completed during a previous visit to this page, and the resources are already pre-fetched.
       // So we can show the list of files right away.
-      resolve(registration);
+      //resolve(registration);
     }
   });
 }
@@ -124,17 +125,17 @@ if ("serviceWorker" in navigator) {
     .register("/serviceWorker.js")
     .then(waitUntilPreCache)
     .then(function(registration) {
-      
       console.log("Registration successful, scope info:", registration);
 
       swRegistration = registration;
 
       if ("PushManager" in window) {
-        console.log(" Push Manager is supported ");
 
+        console.log(" Push Manager is supported ");
         const applicationServerKey = urlB64ToUint8Array(
           applicationServerPublicKey
         );
+
         swRegistration.pushManager
           .subscribe({
             userVisibleOnly: true,
@@ -143,8 +144,8 @@ if ("serviceWorker" in navigator) {
           .then(function(subscription) {
             console.log("User is subscribed. " + JSON.stringify(subscription));
 
-            addSubscriptionOnServer(subscription).then(function(response){
-              console.log('Subscription Added | '+response);
+            addSubscriptionOnServer(subscription).then(function(response) {
+              console.log("Subscription Added | " + response);
             });
             isSubscribed = true;
             //updateBtn();
@@ -178,8 +179,6 @@ function urlB64ToUint8Array(base64String) {
   }
   return outputArray;
 }
-
-
 
 function initiaizePushManager() {}
 

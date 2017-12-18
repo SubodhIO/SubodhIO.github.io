@@ -125,7 +125,7 @@ app.controller("homeController", function(
   $scope.selectedCard = null;
   $scope.homePageFilter = "none";
 
-  $scope.eventComment = "";
+    $scope.eventComment = "";
 
   online.getStatus().then(function(res) {
     console.log("***" + res);
