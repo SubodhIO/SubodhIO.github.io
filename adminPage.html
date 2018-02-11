@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css">
+
+
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Questrial');
+
+
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Questrial', sans-serif;
+  }
+
+  .btn {
+    border-radius: 2px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: 'Questrial', sans-serif;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  .headerText {
+    font-weight: bold;
+  }
+
+  .menus {
+    display: grid;
+    align-items: center;
+    justify-items: right;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .section {
+    padding: 20px;
+    border-radius: -2px;
+    border: 1px solid #eee;
+    box-shadow: 0px 4px 10px -6px rgba(46, 46, 46, .5);
+  }
+
+  .pageContainer {
+    display: grid;
+    grid-template-rows: 60px 1fr;
+  }
+
+  .pageBody {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+  }
+
+  .pageheader {
+    padding: 15px 15px 15px 20px;
+    display: grid;
+    z-index: 10;
+    box-shadow: 0px 1px 8px -1px rgba(46, 46, 46, .5);
+    grid-template-columns: 250px 4fr 1fr;
+    grid-column-gap: 15px;
+  }
+
+  .btn-primary {
+    background-color: #077dfa;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .sideBar {
+    padding-top: 5px;
+    height: 100%;
+    background: #eee;
+    color: #464646;
+    cursor: pointer;
+  }
+
+  .content {
+    padding: 10px 15px;
+  }
+
+  .menuOption {
+    margin-bottom: 5px;
+    display: grid;
+    grid-template-columns: 2fr 7fr;
+    align-items: center;
+    padding: 5px 15px;
+    color: #666666;
+    transition-duration: .25s;
+    border-left: 0px solid #eee;
+  }
+
+  .menuOption-selected {
+    color: #077dfa;
+    transition-duration: .25s;
+    border-left: 4px solid #077dfa;
+    background: rgba(255, 255, 255, .75);
+  }
+
+  .menuOption:hover {
+    margin-bottom: 5px;
+    display: grid;
+    grid-template-columns: 2fr 7fr;
+    align-items: center;
+    padding: 5px 15px;
+    color: #077dfa;
+    background: rgba(255, 255, 255, .75);
+  }
+
+  .dataSection {
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 15px;
+    display: grid;
+    grid-template-rows: 30px 1fr;
+    /*background: rgba(238, 238, 238, .5);*/
+    border: 1px solid rgba(7, 125, 250, .5);
+  }
+
+  .blue-border {
+    border-bottom: 3px solid rgba(7, 125, 250, 1)!important;
+  }
+
+  .text-primary {
+    color: #077dfa;
+  }
+
+  .projectAction {
+    display: grid;
+    justify-items: end;
+  }
+
+  @media screen and (min-width:1200px) {
+    .headerCardSection {
+      display: grid;
+      grid-auto-rows: 110px;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+      margin-bottom: 15px;
+    }
+
+
+
+    .userSection {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      /* background-color: white; */
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+      margin-bottom: 20px;
+    }
+    .graphSection {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 15px;
+      margin-bottom: 20px;
+      grid-row-gap: 10px;
+    }
+  }
+
+
+  @media screen and (max-width:1200px) and (min-width:900px) {
+    .headerCardSection {
+      display: grid;
+      grid-auto-rows: 110px;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .userSection {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      /* background-color: white; */
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .graphSection {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 15px;
+      margin-bottom: 20px;
+      grid-row-gap: 15px;
+    }
+  }
+
+  @media screen and (max-width:900px) and (min-width:600px) {
+    .headerCardSection {
+      display: grid;
+      grid-auto-rows: 110px;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+    }
+
+    .userSection {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      /* background-color: white; */
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .graphSection {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-column-gap: 15px;
+      margin-bottom: 20px;
+      grid-row-gap: 15px;
+    }
+  }
+
+  .info {
+    display: grid;
+    grid-template-rows: 3fr 2fr 2fr;
+  }
+
+  .position {
+    font-size: 12px;
+    color: #666666;
+  }
+
+  .email {
+    font-size: 12px;
+    color: #666666;
+  }
+
+  .userCard .icon {
+    color: #eee;
+    display: grid;
+    align-content: center;
+  }
+
+  .userCard {
+
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    padding: 15px;
+    border-radius: -2px;
+    border: 1px solid #eee;
+    box-shadow: 0px 4px 10px -6px rgba(46, 46, 46, .5);
+  }
+
+  .card {
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    padding: 15px;
+    border-radius: -2px;
+    border: 1px solid #eee;
+    box-shadow: 0px 4px 10px -6px rgba(46, 46, 46, .5);
+    transition-duration: .25s;
+    transform: translateY(0px);
+  }
+
+  .card:hover,
+  .section:hover {
+    transition-duration: .25s;
+    box-shadow: 0px 8px 8px -5px rgba(46, 46, 46, .5);
+    transform: translateY(-2px);
+  }
+
+  .cardContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardContent .count {
+    font-size: 24px;
+  }
+
+  .cardContent .percentage {
+    font-size: 40px;
+    color: #077dfa;
+  }
+
+  input.searchInput {
+    width: 100%;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid rgba(46, 46, 46, .5);
+    padding: 5px 10px;
+    box-sizing: border-box;
+  }
+
+  .tagText {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .Logo {
+    color: #077dfa;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .projectSection {
+    display: grid;
+    grid-template-rows: 35px 1fr;
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: -2px;
+    border: 1px solid #eee;
+    box-shadow: 0px 4px 10px -6px rgba(46, 46, 46, .5);
+  }
+
+  .projectHeader {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr 2fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr 2fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .itemHeader {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .graphDiv {
+    display: grid;
+    grid-row-gap: 15px;
+  }
+
+  .dataSection i.material-icons {
+    position: absolute;
+    background: transparent;
+    right: 10px;
+    top: 10px;
+    color: #077dfa;
+  }
+
+  .percentage span {
+    font-size: 14px;
+    padding-left: 2px;
+  }
+
+  .projectAddContent {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-row-gap: 15px;
+  }
+
+  .projectAdd {
+    margin-top: 5px;
+    display: grid;
+    grid-template-rows: 40px 1fr;
+  }
+
+  .projectAddContent input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    padding: 5px;
+    font-size: 12px;
+  }
+
+  .projectAddAction {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 15px;
+  }
+
+  .label {
+    color: #666;
+    font-size: 12px;
+  }
+</style>
+<script>
+  var app = angular.module('adminApp', []);
+
+  app.controller('adminController', function ($scope) {
+
+
+
+    $scope.setMenuOptionSelection = function (val) {
+      $scope.menuOptionSelection = val;
+    }
+
+    $scope.menuOptions = [
+      { label: 'Dashboard', icon: 'dashboard' },
+      { label: 'Typography', icon: 'keyboard' },
+      { label: 'User Interface', icon: 'devices' },
+      { label: 'Forms', icon: 'description' },
+      { label: 'Tables', icon: 'grid_on' },
+      { label: 'Charts', icon: 'show_chart' },
+      { label: 'Calendar', icon: 'event' },
+      { label: 'Mail', icon: 'email' },
+      { label: 'Pages', icon: 'filter_none' }
+    ];
+    $scope.topCards = [
+      { header: 'Total Revenue', percentage: 58, count: 256, tagText: 'Revenue Today' },
+      { header: 'Sales Analytics', percentage: 32, count: 8451, tagText: 'Revenue Today' },
+      { header: 'Statistics', percentage: 80, count: 4569, tagText: 'Revenue Today' },
+      { header: 'Daily Sales', percentage: 23, count: 158, tagText: 'Revenue Today' }
+
+    ];
+    $scope.topUsers = [
+      { name: 'Adam Blake', email: 'ablake@admin.co', position: 'Admin' },
+      { name: 'Carol Darwin', email: 'cdarwin@admin.co', position: 'Support Lead' },
+      { name: 'Emily Rose', email: 'erose@admin.co', position: 'Designer' },
+      { name: 'Jack Brown', email: 'jbrown@admin.co', position: 'Developer' }
+
+    ];
+    $scope.projects = [
+      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+    ];
+
+    $scope.clearInvoice = function () {
+      $scope.invoiceList = [];
+      $scope.invoiceLabel = '';
+    }
+    $scope.generateInvoice = function (val, label) {
+      $scope.invoiceList = [];
+      $scope.invoiceLabel = label;
+
+      for (var i = 1; i <= 5; i++) {
+        var item = {
+          itemId: Math.floor(Math.random() * Math.floor(10000)),
+          itemDate: new Date(),
+          itemQty: Math.floor(Math.random() * Math.floor(10)) + 1,
+          itemPrice: (i) * (val / 15)
+        }
+
+        $scope.invoiceList.push(item);
+      }
+    }
+
+    $scope.getArcPath = function (cx, cy, rx, ry, startAngle) {
+
+      var theta = startAngle * Math.PI / 180;
+
+      var dx = rx * Math.cos(theta);
+      var dy = ry * Math.sin(theta);
+
+      return [
+        "M", cx + dx, cy + dy,
+        "a", rx, ry, "0 1 1", 2 * -dx, 2 * -dy,
+        "a", rx, ry, "0 1 1", 2 * dx, 2 * dy, "z"
+      ].join(" ");
+    }
+
+    $scope.addProject = false;
+
+    $scope.onClickSaveProject = function () {
+      $scope.addProject = false;
+      if ($scope.newProject.name) {
+        $scope.projects.push($scope.newProject);
+      }
+
+    }
+    $scope.onClickCancelProject = function () {
+      $scope.addProject = false;
+    }
+    $scope.onClickAddProject = function () {
+      $scope.addProject = true;
+      $scope.newProject = { status: 'Not Started' };
+    }
+    $scope.init = function () {
+      $scope.newProject = { status: 'Not Started' };
+      $scope.menuOptionSelection = $scope.menuOptions[0].label;
+    }
+
+    $scope.init();
+
+  });
+
+</script>
+
+<body ng-app="adminApp">
+
+
+  <div class='pageContainer' ng-controller="adminController">
+    <div class="pageheader">
+      <div class="Logo"> Aboard </div>
+      <div class="search">
+        <div>
+          <input type="text" placeholder="search" class="searchInput" />
+        </div>
+      </div>
+      <div class="menus text-primary">
+        <div><i class="material-icons">build</i></div>
+        <div><i class="material-icons">restore</i></div>
+        <div><i class="material-icons">help</i></div>
+        <div><i class="material-icons">perm_identity</i></div>
+      </div>
+    </div>
+    <div class="pageBody">
+      <div class='sideBar'>
+        <div class="" ng-repeat="i in menuOptions">
+          <div class="menuOption" ng-class="{'menuOption-selected':menuOptionSelection===i.label}" ng-click="setMenuOptionSelection(i.label)"><i class="material-icons md-light">{{i.icon}}</i> {{i.label}}</div>
+        </div>
+      </div>
+      <div class='content'>
+
+        <div class="headerCardSection">
+          <div class="" ng-repeat="i in topCards">
+            <div class="card" ng-click="generateInvoice(i.count,i.header)" ng-class="{'blue-border':invoiceLabel===i.header}">
+              <div class="cardHeader headerText">{{i.header}}</div>
+              <div class="cardContent">
+                <div class="percentage">{{i.percentage}}<span>%</span></div>
+                <div>
+                  <div class="count">{{i.count | currency}}</div>
+                  <div class="tagText">{{i.tagText}}</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="dataSection section" ng-if="invoiceList.length">
+          <i class="material-icons" ng-click="clearInvoice()">close</i>
+          <div class="headerText">{{invoiceLabel}}</div>
+          <div class="itemHeader">
+            <div>#</div>
+            <div>Item Id</div>
+            <div>Date</div>
+            <div>Qty</div>
+            <div>Price</div>
+          </div>
+          <div class="" ng-repeat="i in invoiceList track by $index">
+            <div class="item">
+              <div>{{$index+1}}</div>
+              <div>{{i.itemId}}</div>
+              <div>{{i.itemDate | date}}</div>
+              <div>{{i.itemQty }}</div>
+              <div>{{i.itemPrice | currency }}</div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+        <div class="graphSection">
+          <div class="graphDiv section">
+            <div class="headerText">Total Revenue</div>
+            <div id="SplineChart"></div>
+          </div>
+          <div class="graphDiv section">
+            <div class="headerText">Statistics</div>
+            <div id="BarChart"></div>
+          </div>
+        </div>
+
+        <div class="userSection">
+          <div class="" ng-repeat="i in topUsers">
+
+            <div class="userCard">
+              <div class="icon"><i class="material-icons">account_circle</i></div>
+              <div class="info">
+                <div class="name">{{i.name}}</div>
+                <div class="email">{{i.email}}</div>
+                <div class="position">{{i.position}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="projectAction">
+          <div><button class="btn btn-primary" ng-click="onClickAddProject()" ng-show="!addProject"> Add Project </button></div>
+        </div>
+
+        <div class="projectAdd section" ng-show="addProject">
+          <div class="headerText">Add Project</div>
+          <div class="projectAddContent">
+            <div>
+              <div class="label">Project Name</div>
+              <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+            </div>
+            <div>
+              <div class="label">Start Date</div>
+              <input type="date" placeholder="Start Date" ng-model="newProject.date" />
+            </div>
+            <div>
+              <div class="label">Due Date</div>
+              <input type="date" placeholder="Due Date" ng-model="newProject.due" />
+            </div>
+            <div>
+              <div class="label">Assignee</div>
+              <input type="text" placeholder="Assignee" ng-model="newProject.assign" />
+            </div>
+            <div class="projectAddAction">
+              <button class="btn btn-primary" ng-click="onClickSaveProject()">Save</button>
+              <button class="btn" ng-click="onClickCancelProject()">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="projectSection">
+          <div class="headerText">Latest Projects</div>
+          <div class="projectHeader">
+            <div>#</div>
+            <div>Project Name</div>
+            <div>Start Date</div>
+            <div>Due Date</div>
+            <div>Status</div>
+            <div>Assignee</div>
+          </div>
+          <div class="" ng-repeat="i in projects track by $index">
+            <div class="project">
+              <div>{{$index+1}}</div>
+              <div>{{i.name}}</div>
+              <div>{{i.date | date}}</div>
+              <div>{{i.due | date}}</div>
+              <div>{{i.status }}</div>
+              <div>{{i.assign }}</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="chartSection">
+
+        </div>
+
+        <div class="chartSection">
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var chart = bb.generate({
+      data: {
+        columns: [
+          ["data1", 30, 200, 100, 400, 150, 250]
+        ],
+        type: "bar",
+        colors: {
+          data1: "#077dfa",
+          data2: "#6cbaea",
+          data3: "#14487c"
+        }
+      },
+      axis: {
+        x: {
+          type: "category",
+          categories: [
+            "2017", "2016", "2015", "2014", "2013", "2012"
+          ]
+        }
+      },
+      bar: {
+        width: {
+          ratio: 0.2
+        }
+      },
+      legend: {
+        show: false
+      },
+      bindto: "#BarChart"
+    });
+
+    /*setTimeout(function () {
+      chart.load({
+        columns: [
+          ['data3', 130, -150, 200, 300, -200, 100]
+        ]
+      });
+    }, 1000);*/
+
+    var chart = bb.generate({
+      data: {
+        columns: [
+          ["data1", 10, 20, 10, 40, 15, 25],
+          ["data2", 13, 10, 14, 20, 15, 5]
+        ],
+        type: "spline",
+        colors: {
+          data1: "#077dfa",
+          data2: "#6cbaea",
+          data3: "#14487c"
+        },
+
+      },
+      axis: {
+        x: {
+          type: "category",
+          categories: [
+            "2017", "2016", "2015", "2014", "2013", "2012"
+          ]
+        }
+      },
+      legend: {
+        show: false
+      },
+      point: {
+        show: false
+      },
+      bindto: "#SplineChart"
+    });
+  </script>
+
+
+
+</body>
+
+</html>
