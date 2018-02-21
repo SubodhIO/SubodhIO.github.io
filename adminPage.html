@@ -62,7 +62,7 @@
 
   .pageBody {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 1fr 5fr;
   }
 
   .pageheader {
@@ -308,6 +308,7 @@
     color: #666;
   }
 
+
   .Logo {
     color: #077dfa;
     font-size: 32px;
@@ -322,23 +323,34 @@
     border-radius: -2px;
     border: 1px solid #eee;
     box-shadow: 0px 4px 10px -6px rgba(46, 46, 46, .5);
+    margin-bottom: 20px;
   }
 
   .projectHeader {
     display: grid;
-    grid-template-columns: 1fr 4fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: 1fr 4fr 2fr 2fr 2fr 2fr 1fr;
     padding: 5px 0px;
     border-bottom: 1px solid #eee;
     font-weight: bold;
+    align-items: center;
   }
 
   .project {
     display: grid;
-    grid-template-columns: 1fr 4fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: 1fr 4fr 2fr 2fr 2fr 2fr 1fr;
     padding: 5px 0px;
     border-bottom: 1px solid #eee;
     font-size: 14px;
     color: #666;
+    align-items: center;
+    cursor: pointer;
+    transition-duration: .25s;
+  }
+
+  .project:hover {
+    font-size: 14px;
+    color: #077dfa;
+    transition-duration: .15s;
   }
 
   .itemHeader {
@@ -385,7 +397,8 @@
   .projectAdd {
     margin-top: 5px;
     display: grid;
-    grid-template-rows: 40px 1fr;
+    grid-gap: 15px;
+    grid-template-rows: 40px 1fr 30px;
   }
 
   .projectAddContent input {
@@ -398,7 +411,7 @@
 
   .projectAddAction {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 15px;
   }
 
@@ -406,28 +419,96 @@
     color: #666;
     font-size: 12px;
   }
+
+  .details {
+    margin-top: 10px;
+    display: grid;
+    grid-template-rows: 1fr 5fr 1fr;
+    grid-row-gap: 15px;
+    cursor: pointer;
+  }
+
+  .detailsHeader {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    align-items: self-start;
+  }
+
+  .detailsClose {
+    justify-self: right;
+  }
+
+  .detailsContent {
+    display: grid;
+    grid-row-gap: 10px;
+  }
+
+  .detailsContent input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    padding: 5px;
+    font-size: 12px;
+  }
+
+  .tabGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    grid-gap: 5px;
+  }
+
+  .tabItem {
+    cursor: pointer;
+    border: 1px solid #eee;
+    border-radius: 1px;
+  }
+
+  .tabItem {
+    border: 1px solid #eee;
+    border-radius: 1px;
+    padding: 5px;
+    font-size: .75em;
+    transition-duration: .15s;
+  }
+
+  .tabItem:hover {
+    border: 1px solid #077dfa;
+    transition-duration: .15s;
+    color: #077dfa;
+  }
+
+  .tabItemSelected {
+    cursor: pointer;
+    border: 1px solid #eee;
+    border-radius: 1px;
+    padding: 5px;
+    background: #077dfa;
+    font-size: .75em;
+    color: #fff;
+  }
 </style>
 <script>
   var app = angular.module('adminApp', []);
 
   app.controller('adminController', function ($scope) {
 
+    $scope.leadSelected = null;
 
-
+    $scope.setLeadSelected = function (val) {
+      $scope.leadSelected = val;
+    }
     $scope.setMenuOptionSelection = function (val) {
       $scope.menuOptionSelection = val;
     }
 
+    $scope.activePage = '';
     $scope.menuOptions = [
-      { label: 'Dashboard', icon: 'dashboard' },
-      { label: 'Typography', icon: 'keyboard' },
-      { label: 'User Interface', icon: 'devices' },
-      { label: 'Forms', icon: 'description' },
-      { label: 'Tables', icon: 'grid_on' },
-      { label: 'Charts', icon: 'show_chart' },
-      { label: 'Calendar', icon: 'event' },
-      { label: 'Mail', icon: 'email' },
-      { label: 'Pages', icon: 'filter_none' }
+      { label: 'Sales Dashboard', icon: 'dashboard', value: 1 },
+      { label: 'Estimation Dashboard', icon: 'devices', value: 2 },
+      { label: 'Quote Generation', icon: 'devices', value: 3 },
+      { label: 'Project', icon: 'description', value: 3 }
+
     ];
     $scope.topCards = [
       { header: 'Total Revenue', percentage: 58, count: 256, tagText: 'Revenue Today' },
@@ -444,15 +525,24 @@
 
     ];
     $scope.projects = [
-      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
-      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
-      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
-      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
-      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
-      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
-      { name: 'Project v1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Sales Lead #1', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Sales Lead #2', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Sales Lead #3', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Sales Lead #4', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Sales Lead #5', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Sales Lead #6', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+      { name: 'Sales Lead #7', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
     ];
 
+    $scope.inclusions =
+      ['Anchor Bolts', 'Beams', 'Columns', 'Braces',
+        'Kickers', 'Beam Bearing Plates', 'Joint Bearing Plates', 'Loose Plates',
+        'Ledger Angles', 'Elevator Pit Angles'];
+
+    $scope.exclusions = [
+      'Connection Design & PE Stamping',
+      'Stairs', 'Hand Rails', 'Wall Rails',
+      'Guard Rails', 'Joints', 'Roof Deck', 'Trash Gate', 'Bollard'];
     $scope.clearInvoice = function () {
       $scope.invoiceList = [];
       $scope.invoiceLabel = '';
@@ -496,16 +586,46 @@
       }
 
     }
+
     $scope.onClickCancelProject = function () {
       $scope.addProject = false;
     }
+
     $scope.onClickAddProject = function () {
       $scope.addProject = true;
       $scope.newProject = { status: 'Not Started' };
     }
+
     $scope.init = function () {
       $scope.newProject = { status: 'Not Started' };
       $scope.menuOptionSelection = $scope.menuOptions[0].label;
+    }
+
+    $scope.onInclusionClick = function (val) {
+      if ($scope.selectedEstimate) {
+        if (!$scope.selectedEstimate.inclusion) {
+          $scope.selectedEstimate.inclusion = [];
+        }
+        if ($scope.selectedEstimate.inclusion.indexOf(val) < 0) {
+          $scope.selectedEstimate.inclusion.push(val);
+        }
+      }
+    }
+    $scope.onExclusionClick = function (val) {
+      if ($scope.selectedEstimate) {
+        if (!$scope.selectedEstimate.exclusion) {
+          $scope.selectedEstimate.exclusion = [];
+        }
+        if ($scope.selectedEstimate.exclusion.indexOf(val) < 0) {
+          $scope.selectedEstimate.exclusion.push(val);
+        }
+      }
+    }
+    $scope.onSelectEstimate = function (val) {
+      $scope.selectedEstimate = val;
+    }
+    $scope.onClickCancelEstimate = function () {
+      $scope.selectedEstimate = null;
     }
 
     $scope.init();
@@ -535,11 +655,12 @@
     <div class="pageBody">
       <div class='sideBar'>
         <div class="" ng-repeat="i in menuOptions">
-          <div class="menuOption" ng-class="{'menuOption-selected':menuOptionSelection===i.label}" ng-click="setMenuOptionSelection(i.label)"><i class="material-icons md-light">{{i.icon}}</i> {{i.label}}</div>
+          <div class="menuOption" ng-class="{'menuOption-selected':menuOptionSelection.label===i.label}" ng-click="setMenuOptionSelection(i)"><i class="material-icons md-light">{{i.icon}}</i> {{i.label}}</div>
         </div>
       </div>
       <div class='content'>
 
+        <!--/* CARDS */-->
         <div class="headerCardSection">
           <div class="" ng-repeat="i in topCards">
             <div class="card" ng-click="generateInvoice(i.count,i.header)" ng-class="{'blue-border':invoiceLabel===i.header}">
@@ -557,6 +678,212 @@
 
 
         </div>
+        <div id="salesDashboardDiv" ng-show="menuOptionSelection.value===1">
+
+          <!--/* LEADS */-->
+          <div>
+            <div class="projectAction">
+              <div><button class="btn btn-primary" ng-click="onClickAddProject()" ng-hide="leadSelected || addProject"> Add New lead </button></div>
+            </div>
+            <div class="projectAdd section" ng-show="addProject">
+              <div class="headerText">Add New Lead </div>
+              <div class="projectAddContent">
+                <div>
+                  <div class="label">Company</div>
+                  <input type="text" placeholder="Company Name" ng-model="newProject.name" />
+                </div>
+                <div>
+                  <div class="label">Websites</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+                <div>
+                  <div class="label">Status/Id</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+                <div>
+                  <div class="label">Phone</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+                <div>
+                  <div class="label">State</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+                <div>
+                  <h5>Bid Estimates</h5>
+                </div>
+
+                <div>
+                  <div class="label">Bid Recieved Date</div>
+                  <input type="date" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+                <div>
+                  <div class="label">Bid Sending Date</div>
+                  <input type="date" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+                <div>
+                  <div class="label">Bid Recieved From</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+                <div>
+                  <div class="label">Bid Sender</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+                <div>
+                  <div class="label">Required Document</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+                <div>
+                  <div class="label">Required Link/Path</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+                <div>
+                  <div class="label">Bid Required</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+
+              </div>
+              <div class="projectAddAction">
+                <button class="btn btn-primary" ng-click="onClickSaveProject()">Save</button>
+                <button class="btn btn-primary" ng-click="onClickSaveProject()">Submit</button>
+                <button class="btn" ng-click="onClickCancelProject()">Cancel</button>
+              </div>
+            </div>
+
+            <div class="projectSection">
+              <div class="headerText">Leads</div>
+              <div class="projectHeader">
+                <div>#</div>
+                <div>Company</div>
+                <div>Status</div>
+                <div>Bid Recieving Date</div>
+                <div>Bid Sending Date</div>
+                <div>Bid Required</div>
+
+              </div>
+              <div class="" ng-repeat="i in projects track by $index">
+                <div class="project" ng-click="onClickAddProject()">
+                  <div>{{$index+1}}</div>
+                  <div>{{i.name}}</div>
+                  <div>{{i.date | date}}</div>
+                  <div>{{i.due | date}}</div>
+                  <div>{{i.status }}</div>
+                  <div>{{i.assign }}</div>
+
+                </div>
+
+              </div>
+            </div>
+
+
+
+            <!-- 1. SalesDashboard | List of leads | onClick Lead Details | Option to Add a new lead | Save / Send it for Estimation | 
+          2. Estimation Dashboard | List of Estimation | OnClick Estimate Details Form with Remarks column | Save / Submit |go to Quote generation Page 
+          3. Generate Quote Page | Enter Quote Price | 4. Bid Status Screen | If Bid is success | it will turn to project Project -->
+          </div>
+
+        </div>
+
+        <div id="estDashboardDiv" ng-show="menuOptionSelection.value===2">
+
+          <!--/* ESTS */-->
+          <div>
+
+            <div class="projectAdd section" ng-show="selectedEstimate">
+              <div class="headerText">Add New Lead </div>
+              <div class="projectAddContent">
+                <div>
+                  <div class="label">Company</div>
+                  <input type="text" placeholder="Company Name" ng-model="newProject.name" />
+                </div>
+                <div>
+                  <div class="label">Websites</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+                <div>
+                  <div class="label">Status/Id</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+                <div>
+                  <div class="label">Phone</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+                <div>
+                  <div class="label">State</div>
+                  <input type="text" placeholder="Project Name" ng-model="newProject.name" />
+                </div>
+
+                <div>
+                  <h5>Inclusions </h5>
+                </div>
+
+                <div class="tabGrid">
+                  <div ng-click="onInclusionClick(i)" class="tabItem" ng-repeat="i in inclusions" ng-class="{'tabItemSelected':(selectedEstimate.inclusion.indexOf(i)>-1)}">
+                    {{i}}
+                  </div>
+                </div>
+
+                <div>
+                  <h5>Exclusions </h5>
+                </div>
+
+                <div class="tabGrid">
+                  <div ng-click="onExclusionClick(i)" class="tabItem" ng-repeat="i in exclusions" ng-class="{'tabItemSelected':(selectedEstimate.exclusion.indexOf(i)>-1)}">
+                    {{i}}
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="projectAddAction">
+                <button class="btn btn-primary" ng-click="onClickSaveProject()">Save</button>
+                <button class="btn btn-primary" ng-click="onClickSaveProject()">Submit</button>
+                <button class="btn" ng-click="onClickCancelEstimate()">Cancel</button>
+              </div>
+            </div>
+
+            <div class="projectSection">
+              <div class="headerText">Estimations</div>
+              <div class="projectHeader">
+                <div>#</div>
+                <div>Company</div>
+                <div>Status</div>
+                <div>Bid Recieving Date</div>
+                <div>Bid Sending Date</div>
+                <div>Bid Required</div>
+
+              </div>
+              <div class="" ng-repeat="i in projects track by $index">
+                <div class="project" ng-click="onSelectEstimate(i)">
+                  <div>{{$index+1}}</div>
+                  <div>{{i.name}}</div>
+                  <div>{{i.date | date}}</div>
+                  <div>{{i.due | date}}</div>
+                  <div>{{i.status }}</div>
+                  <div>{{i.assign }}</div>
+                </div>
+
+              </div>
+            </div>
+
+
+
+            <!-- 1. SalesDashboard | List of leads | onClick Lead Details | Option to Add a new lead | Save / Send it for Estimation | 
+          2. Estimation Dashboard | List of Estimation | OnClick Estimate Details Form with Remarks column | Save / Submit |go to Quote generation Page 
+          3. Generate Quote Page | Enter Quote Price | 4. Bid Status Screen | If Bid is success | it will turn to project Project -->
+          </div>
+
+        </div>
+
+
+
 
         <div class="dataSection section" ng-if="invoiceList.length">
           <i class="material-icons" ng-click="clearInvoice()">close</i>
@@ -592,80 +919,24 @@
             <div id="BarChart"></div>
           </div>
         </div>
+        <!--/* USERS */-->
+        <div class="userSection ">
+          <div class=" " ng-repeat="i in topUsers ">
 
-        <div class="userSection">
-          <div class="" ng-repeat="i in topUsers">
-
-            <div class="userCard">
-              <div class="icon"><i class="material-icons">account_circle</i></div>
-              <div class="info">
-                <div class="name">{{i.name}}</div>
-                <div class="email">{{i.email}}</div>
-                <div class="position">{{i.position}}</div>
+            <div class="userCard ">
+              <div class="icon "><i class="material-icons ">account_circle</i></div>
+              <div class="info ">
+                <div class="name ">{{i.name}}</div>
+                <div class="email ">{{i.email}}</div>
+                <div class="position ">{{i.position}}</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="projectAction">
-          <div><button class="btn btn-primary" ng-click="onClickAddProject()" ng-show="!addProject"> Add Project </button></div>
-        </div>
 
-        <div class="projectAdd section" ng-show="addProject">
-          <div class="headerText">Add Project</div>
-          <div class="projectAddContent">
-            <div>
-              <div class="label">Project Name</div>
-              <input type="text" placeholder="Project Name" ng-model="newProject.name" />
-            </div>
-            <div>
-              <div class="label">Start Date</div>
-              <input type="date" placeholder="Start Date" ng-model="newProject.date" />
-            </div>
-            <div>
-              <div class="label">Due Date</div>
-              <input type="date" placeholder="Due Date" ng-model="newProject.due" />
-            </div>
-            <div>
-              <div class="label">Assignee</div>
-              <input type="text" placeholder="Assignee" ng-model="newProject.assign" />
-            </div>
-            <div class="projectAddAction">
-              <button class="btn btn-primary" ng-click="onClickSaveProject()">Save</button>
-              <button class="btn" ng-click="onClickCancelProject()">Cancel</button>
-            </div>
-          </div>
-        </div>
-        <div class="projectSection">
-          <div class="headerText">Latest Projects</div>
-          <div class="projectHeader">
-            <div>#</div>
-            <div>Project Name</div>
-            <div>Start Date</div>
-            <div>Due Date</div>
-            <div>Status</div>
-            <div>Assignee</div>
-          </div>
-          <div class="" ng-repeat="i in projects track by $index">
-            <div class="project">
-              <div>{{$index+1}}</div>
-              <div>{{i.name}}</div>
-              <div>{{i.date | date}}</div>
-              <div>{{i.due | date}}</div>
-              <div>{{i.status }}</div>
-              <div>{{i.assign }}</div>
-            </div>
 
-          </div>
-        </div>
 
-        <div class="chartSection">
-
-        </div>
-
-        <div class="chartSection">
-
-        </div>
 
       </div>
     </div>
@@ -676,20 +947,20 @@
     var chart = bb.generate({
       data: {
         columns: [
-          ["data1", 30, 200, 100, 400, 150, 250]
+          ["data1 ", 30, 200, 100, 400, 150, 250]
         ],
-        type: "bar",
+        type: "bar ",
         colors: {
-          data1: "#077dfa",
-          data2: "#6cbaea",
-          data3: "#14487c"
+          data1: "#077dfa ",
+          data2: "#6cbaea ",
+          data3: "#14487c "
         }
       },
       axis: {
         x: {
-          type: "category",
+          type: "category ",
           categories: [
-            "2017", "2016", "2015", "2014", "2013", "2012"
+            "2017 ", "2016 ", "2015 ", "2014 ", "2013 ", "2012 "
           ]
         }
       },
@@ -701,7 +972,7 @@
       legend: {
         show: false
       },
-      bindto: "#BarChart"
+      bindto: "#BarChart "
     });
 
     /*setTimeout(function () {
@@ -715,22 +986,22 @@
     var chart = bb.generate({
       data: {
         columns: [
-          ["data1", 10, 20, 10, 40, 15, 25],
-          ["data2", 13, 10, 14, 20, 15, 5]
+          ["data1 ", 10, 20, 10, 40, 15, 25],
+          ["data2 ", 13, 10, 14, 20, 15, 5]
         ],
-        type: "spline",
+        type: "spline ",
         colors: {
-          data1: "#077dfa",
-          data2: "#6cbaea",
-          data3: "#14487c"
+          data1: "#077dfa ",
+          data2: "#6cbaea ",
+          data3: "#14487c "
         },
 
       },
       axis: {
         x: {
-          type: "category",
+          type: "category ",
           categories: [
-            "2017", "2016", "2015", "2014", "2013", "2012"
+            "2017 ", "2016 ", "2015 ", "2014 ", "2013 ", "2012 "
           ]
         }
       },
@@ -740,7 +1011,7 @@
       point: {
         show: false
       },
-      bindto: "#SplineChart"
+      bindto: "#SplineChart "
     });
   </script>
 
