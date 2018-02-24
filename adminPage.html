@@ -72,6 +72,9 @@
     box-shadow: 0px 1px 8px -1px rgba(46, 46, 46, .5);
     grid-template-columns: 250px 4fr 1fr;
     grid-column-gap: 15px;
+    position: fixed;
+    width: 100%;
+    background: #fff;
   }
 
   .btn-primary {
@@ -81,15 +84,16 @@
   }
 
   .sideBar {
-    padding-top: 5px;
-    height: 100%;
+    padding-top: 75px;
+
+    height: 100vh;
     background: #eee;
     color: #464646;
     cursor: pointer;
   }
 
   .content {
-    padding: 10px 15px;
+    padding: 75px 15px 10px 15px;
   }
 
   .menuOption {
@@ -101,6 +105,7 @@
     color: #666666;
     transition-duration: .25s;
     border-left: 0px solid #eee;
+    grid-gap: 10px;
   }
 
   .menuOption-selected {
@@ -347,7 +352,95 @@
     transition-duration: .25s;
   }
 
-  .project:hover {
+  .prjHeader {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    align-items: center;
+  }
+
+  .prj {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    align-items: center;
+    cursor: pointer;
+    transition-duration: .25s;
+  }
+
+  .taskHeader {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    align-items: center;
+  }
+
+  .task {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    align-items: center;
+    cursor: pointer;
+    transition-duration: .25s;
+  }
+
+  .rsrcHeader {
+    display: grid;
+    grid-template-columns: 1fr 6fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    align-items: center;
+  }
+
+  .rsrc {
+    display: grid;
+    grid-template-columns: 1fr 6fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    align-items: center;
+    cursor: pointer;
+    transition-duration: .25s;
+  }
+
+  .bidHeader {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 3fr 2fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    align-items: center;
+  }
+
+  .bid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 3fr 2fr 2fr 2fr;
+    padding: 5px 0px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    align-items: center;
+    cursor: pointer;
+    transition-duration: .25s;
+  }
+
+  .project:hover,
+  .bid:hover,
+  .task:hover,
+  .rsrc:hover,
+  .prj:hover {
     font-size: 14px;
     color: #077dfa;
     transition-duration: .15s;
@@ -507,7 +600,10 @@
       { label: 'Sales Dashboard', icon: 'dashboard', value: 1 },
       { label: 'Estimation Dashboard', icon: 'devices', value: 2 },
       { label: 'Quote Generation', icon: 'devices', value: 3 },
-      { label: 'Project', icon: 'description', value: 3 }
+      { label: 'Bid Dashboard', icon: 'devices', value: 4 },
+      { label: 'Projects', icon: 'description', value: 5 },
+      { label: 'Task', icon: 'description', value: 6 },
+      { label: 'Team', icon: 'description', value: 7 }
 
     ];
     $scope.topCards = [
@@ -532,6 +628,46 @@
       { name: 'Sales Lead #5', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
       { name: 'Sales Lead #6', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
       { name: 'Sales Lead #7', date: new Date(), due: new Date(), status: 'Not Started', assign: 'Admin' },
+    ];
+
+    $scope.bids = [
+      { status: 'Won', fabricator: 'Fabricator #1', job: 'Job Description #1', estPrice: 1000 - (Math.random() * 10), cliPrice: 1000 - (Math.random() * 10) },
+      { status: 'Won', fabricator: 'Fabricator #12', job: 'Job Description #91', estPrice: 1000 - (Math.random() * 10), cliPrice: 1000 - (Math.random() * 10) },
+      { status: 'Won', fabricator: 'Fabricator #31', job: 'Job Description #18', estPrice: 1000 - (Math.random() * 10), cliPrice: 1000 - (Math.random() * 10) },
+      { status: 'Open', fabricator: 'Fabricator #14', job: 'Job Description #71', estPrice: 1000 - (Math.random() * 10), cliPrice: 1000 - (Math.random() * 10) },
+      { status: 'Open', fabricator: 'Fabricator #51', job: 'Job Description #16', estPrice: 1000 - (Math.random() * 10), cliPrice: 1000 - (Math.random() * 10) },
+      { status: 'Lost', fabricator: 'Fabricator #16', job: 'Job Description #51', estPrice: 1000 - (Math.random() * 10), cliPrice: 1000 - (Math.random() * 10) },
+      { status: 'Lost', fabricator: 'Fabricator #71', job: 'Job Description #14', estPrice: 1000 - (Math.random() * 10), cliPrice: 1000 - (Math.random() * 10) },
+    ];
+
+    $scope.mainProjects = [
+      { name: 'Project #' + Math.ceil(Math.random() * 999), start: new Date(), status: 'In Progress' },
+      { name: 'Project #' + Math.ceil(Math.random() * 999), start: new Date(), status: 'In Progress' },
+      { name: 'Project #' + Math.ceil(Math.random() * 999), start: new Date(), status: 'Not Started' },
+      { name: 'Project #' + Math.ceil(Math.random() * 999), start: new Date(), status: 'Completed' },
+      { name: 'Project #' + Math.ceil(Math.random() * 999), start: new Date(), status: 'Completed' },
+      { name: 'Project #' + Math.ceil(Math.random() * 999), start: new Date(), status: 'Completed' },
+      { name: 'Project #' + Math.ceil(Math.random() * 999), start: new Date(), status: 'Not Started' },
+    ];
+
+    $scope.mainTasks = [
+      { name: 'Task #' + Math.ceil(Math.random() * 9999), start: new Date(), status: 'In Progress', assignee: 'Rsrc #' + Math.ceil(Math.random() * 99) },
+      { name: 'Task #' + Math.ceil(Math.random() * 9999), start: new Date(), status: 'In Progress', assignee: 'Rsrc #' + Math.ceil(Math.random() * 99) },
+      { name: 'Task #' + Math.ceil(Math.random() * 9999), start: new Date(), status: 'Not Started', assignee: 'Rsrc #' + Math.ceil(Math.random() * 99) },
+      { name: 'Task #' + Math.ceil(Math.random() * 9999), start: new Date(), status: 'Completed', assignee: 'Rsrc #' + Math.ceil(Math.random() * 99) },
+      { name: 'Task #' + Math.ceil(Math.random() * 9999), start: new Date(), status: 'Completed', assignee: 'Rsrc #' + Math.ceil(Math.random() * 99) },
+      { name: 'Task #' + Math.ceil(Math.random() * 9999), start: new Date(), status: 'Completed', assignee: 'Rsrc #' + Math.ceil(Math.random() * 99) },
+      { name: 'Task #' + Math.ceil(Math.random() * 9999), start: new Date(), status: 'Not Started', assignee: 'Rsrc #' + Math.ceil(Math.random() * 99) },
+    ];
+
+    $scope.mainResources = [
+      { name: 'Rsrc #' + Math.ceil(Math.random() * 99), start: new Date(), status: 'In Progress' },
+      { name: 'Rsrc #' + Math.ceil(Math.random() * 99), start: new Date(), status: 'In Progress' },
+      { name: 'Rsrc #' + Math.ceil(Math.random() * 99), start: new Date(), status: 'Not Started' },
+      { name: 'Rsrc #' + Math.ceil(Math.random() * 99), start: new Date(), status: 'Completed' },
+      { name: 'Rsrc #' + Math.ceil(Math.random() * 99), start: new Date(), status: 'Completed' },
+      { name: 'Rsrc #' + Math.ceil(Math.random() * 99), start: new Date(), status: 'Completed' },
+      { name: 'Rsrc #' + Math.ceil(Math.random() * 99), start: new Date(), status: 'Not Started' },
     ];
 
     $scope.inclusions =
@@ -882,43 +1018,109 @@
 
         </div>
 
+        <div id="quoteDashboardDiv" ng-show="menuOptionSelection.value===3">
+          <h4>Quote Dashboard Pending </h4>
+        </div>
 
+        <div id="bidDashboardDiv" ng-show="menuOptionSelection.value===4">
 
+          <div class="projectSection">
+            <div class="headerText">Bid List</div>
+            <div class="bidHeader">
+              <div>#</div>
+              <div>Status</div>
+              <div>Fabricator</div>
+              <div>Job</div>
+              <div>Estimated Price</div>
+              <div>Client Price</div>
+              <div>Difference</div>
 
-        <div class="dataSection section" ng-if="invoiceList.length">
-          <i class="material-icons" ng-click="clearInvoice()">close</i>
-          <div class="headerText">{{invoiceLabel}}</div>
-          <div class="itemHeader">
-            <div>#</div>
-            <div>Item Id</div>
-            <div>Date</div>
-            <div>Qty</div>
-            <div>Price</div>
-          </div>
-          <div class="" ng-repeat="i in invoiceList track by $index">
-            <div class="item">
-              <div>{{$index+1}}</div>
-              <div>{{i.itemId}}</div>
-              <div>{{i.itemDate | date}}</div>
-              <div>{{i.itemQty }}</div>
-              <div>{{i.itemPrice | currency }}</div>
             </div>
+            <div class="" ng-repeat="i in bids track by $index">
+              <div class="bid" ng-click="onSelectEstimate(i)">
+                <div>{{$index+1}}</div>
+                <div>{{i.status}}</div>
+                <div>{{i.fabricator }}</div>
+                <div>{{i.job}}</div>
+                <div>{{i.estPrice | currency}}</div>
+                <div>{{i.cliPrice | currency }}</div>
+                <div>{{(i.estPrice-i.cliPrice)|currency }}</div>
 
+              </div>
+
+            </div>
           </div>
-
-
         </div>
 
-        <div class="graphSection">
-          <div class="graphDiv section">
-            <div class="headerText">Total Revenue</div>
-            <div id="SplineChart"></div>
-          </div>
-          <div class="graphDiv section">
-            <div class="headerText">Statistics</div>
-            <div id="BarChart"></div>
+        <div id="projDashboardDiv" ng-show="menuOptionSelection.value===5">
+          <div class="projectSection">
+            <div class="headerText">Project List</div>
+            <div class="prjHeader">
+              <div>#</div>
+              <div>Name</div>
+              <div>Start</div>
+              <div>Status</div>
+            </div>
+            <div class="" ng-repeat="i in mainProjects track by $index">
+              <div class="prj" ng-click="onSelectEstimate(i)">
+                <div>{{$index+1}}</div>
+                <div>{{i.name}}</div>
+                <div>{{i.start | date }}</div>
+                <div>{{i.status}}</div>
+              </div>
+
+            </div>
           </div>
         </div>
+
+        <div id="taskDashboardDiv" ng-show="menuOptionSelection.value===6">
+          <div class="projectSection">
+            <div class="headerText">Task List</div>
+            <div class="taskHeader">
+              <div>#</div>
+              <div>Name</div>
+              <div>Start</div>
+              <div>Status</div>
+              <div>Assignee</div>
+            </div>
+            <div class="" ng-repeat="i in mainTasks track by $index">
+              <div class="task" ng-click="onSelectEstimate(i)">
+                <div>{{$index+1}}</div>
+                <div>{{i.name}}</div>
+                <div>{{i.start | date }}</div>
+                <div>{{i.status}}</div>
+                <div>{{i.assignee}}</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+        <div id="rsrcDashboardDiv" ng-show="menuOptionSelection.value===7">
+          <div class="projectSection">
+            <div class="headerText">Task List</div>
+            <div class="rsrcHeader">
+              <div>#</div>
+              <div>Name</div>
+              <div>Start</div>
+              <div>Status</div>
+
+            </div>
+            <div class="" ng-repeat="i in mainResources track by $index">
+              <div class="rsrc" ng-click="onSelectEstimate(i)">
+                <div>{{$index+1}}</div>
+                <div>{{i.name}}</div>
+                <div>{{i.start | date }}</div>
+                <div>{{i.status}}</div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
         <!--/* USERS */-->
         <div class="userSection ">
           <div class=" " ng-repeat="i in topUsers ">
@@ -933,10 +1135,6 @@
             </div>
           </div>
         </div>
-
-
-
-
 
       </div>
     </div>
